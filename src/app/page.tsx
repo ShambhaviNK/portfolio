@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-// @ts-ignore: No type definitions for 'aos'
+// @ts-expect-error: No type definitions for 'aos'
 import AOS from "aos";
 
 // Skill data
@@ -151,7 +151,7 @@ export default function Home() {
               <div className="w-16 h-16 bg-gradient-to-br from-accent to-accent-light rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
                 <span className="text-2xl">💬</span>
               </div>
-              <h3 className="text-3xl font-bold mb-2 bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent">Let's Connect!</h3>
+              <h3 className="text-3xl font-bold mb-2 bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent">Let&apos;s Connect!</h3>
               <p className="text-gray-600">I'd love to hear from you!</p>
             </div>
             
