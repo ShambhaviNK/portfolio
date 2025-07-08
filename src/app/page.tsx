@@ -235,7 +235,7 @@ export default function Home() {
           <h2 className="text-3xl font-bold accent text-left hover:text-accent-light transition-colors">Objective</h2>
         </div> */}
         <div className="bg-white/30 backdrop-blur-md border border-white/40 rounded-2xl shadow-2xl p-8 border-2 border-accent hover:shadow-accent/50 transition-all duration-300 hover:scale-[1.02]">
-          <p className="text-base">Front-End Developer with 4 years of experience building responsive web applications, now pursuing a Master's in Engineering Management to combine technical and leadership skills for scalable solutions.</p>
+          <p className="text-base">Front-End Developer with 4 years of experience building responsive web applications, now pursuing a Master&apos;s in Engineering Management to combine technical and leadership skills for scalable solutions.</p>
           <p className="italic accent mt-2 text-base">Currently based in San Jose, California, USA.</p>
         </div>
       </section>
@@ -561,7 +561,7 @@ export default function Home() {
             <ul className="list-disc pl-4 text-base space-y-2">
               <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Part of Hindu-Yuva Club, SJSU</li>
               <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Member of organizing committee of various college events, RCOEM</li>
-              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Member of Students' Representative Council, 2018-19, RCOEM</li>
+              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Member of Students&apos; Representative Council, 2018-19, RCOEM</li>
               <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Member of literary club, RCOEM</li>
               <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Member of Dance club, RCOEM</li>
               <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Core Committee Vice President of Global Village and Balakalakaar, 2018, AIESEC</li>
