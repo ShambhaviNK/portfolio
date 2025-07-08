@@ -223,7 +223,7 @@ export default function Home() {
       {/* Hero Section */}
       <header className="relative w-full max-w-3xl flex flex-col items-center gap-2 mb-10 z-10" data-aos="fade-down">
         <div className="w-36 h-36 rounded-full overflow-hidden border-4 border-[var(--accent)] shadow-lg mb-2 hover:scale-105 transition-transform duration-300">
-          <Image src="/profile.jpg" alt="Profile" width={144} height={144} className="hover:scale-110 transition-transform duration-500" />
+          <Image src="/profile.jpg" alt="Profile" width={144} height={144} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" />
         </div>
         <h1 className="text-4xl font-bold accent drop-shadow-lg hover:scale-105 transition-transform duration-300">Shambhavi Kumar</h1>
       </header>
