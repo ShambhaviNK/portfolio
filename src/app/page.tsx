@@ -1,6 +1,8 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { FaSun, FaMoon } from "react-icons/fa";
+import { MdBlurOn } from "react-icons/md";
 // @ts-expect-error: No type definitions for 'aos'
 import AOS from "aos";
 
@@ -56,6 +58,18 @@ const SKILLS = [
 const SKILL_TABS = ["All", "Frontend", "Backend", "Cloud", "Tools", "Languages", "Specializations"];
 
 export default function Home() {
+  // Theme state: 'light', 'dark', 'glass'
+  const [theme, setTheme] = useState('glass');
+  useEffect(() => {
+    const saved = typeof window !== 'undefined' ? localStorage.getItem('theme') : null;
+    if (saved) setTheme(saved);
+  }, []);
+  useEffect(() => {
+    if (typeof window !== 'undefined') localStorage.setItem('theme', theme);
+  }, [theme]);
+  const nextTheme = theme === 'glass' ? 'light' : theme === 'light' ? 'dark' : 'glass';
+  const themeIcon = theme === 'glass' ? <MdBlurOn size={22} /> : theme === 'light' ? <FaSun size={22} /> : <FaMoon size={22} />;
+
   useEffect(() => {
     AOS.init({ 
       once: false, 
@@ -77,7 +91,11 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState("All");
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-pink-200 via-yellow-100 to-blue-200 text-black p-4 sm:p-10 flex flex-col items-center font-sans overflow-x-hidden">
+    <div className={`relative min-h-screen p-4 sm:p-10 flex flex-col items-center font-sans overflow-x-hidden 
+      ${theme === 'glass' ? 'bg-gradient-to-br from-pink-200 via-yellow-100 to-blue-200 text-black' : ''}
+      ${theme === 'light' ? 'bg-white text-black' : ''}
+      ${theme === 'dark' ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-white' : ''}
+    `}>
       {/* Animated SVG background pattern */}
       <svg className="absolute top-0 left-0 w-full h-64 opacity-10 z-0" style={{animation: 'pulse 4s ease-in-out infinite'}} viewBox="0 0 1440 320">
         <path fill="#800000" fillOpacity="1" d="M0,160L60,170.7C120,181,240,203,360,197.3C480,192,600,160,720,133.3C840,107,960,85,1080,101.3C1200,117,1320,171,1380,197.3L1440,224L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path>
@@ -225,7 +243,18 @@ export default function Home() {
         <div className="w-36 h-36 rounded-full overflow-hidden border-4 border-[var(--accent)] shadow-lg mb-2 hover:scale-105 transition-transform duration-300">
           <Image src="/profile.jpg" alt="Profile" width={144} height={144} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" />
         </div>
-        <h1 className="text-4xl font-bold accent drop-shadow-lg hover:scale-105 transition-transform duration-300">Shambhavi Kumar</h1>
+        <div className="flex items-center gap-2">
+          <Image src="/logo.svg" alt="Logo" width={40} height={40} />
+          <h1 className="text-4xl font-bold accent drop-shadow-lg hover:scale-105 transition-transform duration-300">Shambhavi Navranjan Kumar</h1>
+          <button
+            className="ml-4 p-2 rounded-full border border-accent bg-white/70 dark:bg-gray-800/70 hover:bg-accent hover:text-white transition-colors duration-300 shadow"
+            aria-label="Switch theme"
+            onClick={() => setTheme(nextTheme)}
+            title={`Switch to ${nextTheme} mode`}
+          >
+            {themeIcon}
+          </button>
+        </div>
       </header>
 
       {/* Objective */}
