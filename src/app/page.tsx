@@ -698,7 +698,7 @@ export default function Home() {
           
           <div className="mt-8">
             <div className="font-semibold text-lg mb-4 text-center">📸 Event Highlights</div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {/* Event Images */}
               <div className="aspect-square rounded-lg shadow-md hover:scale-105 transition-transform duration-300 overflow-hidden">
                 <Image src="/event-1.png" alt="Blindfolded Conversations Event 1" width={200} height={200} className="w-full h-full object-cover" />
@@ -717,12 +717,6 @@ export default function Home() {
               </div>
               <div className="aspect-square rounded-lg shadow-md hover:scale-105 transition-transform duration-300 overflow-hidden">
                 <Image src="/event-6.png" alt="Blindfolded Conversations Event 6" width={200} height={200} className="w-full h-full object-cover" />
-              </div>
-              <div className="aspect-square rounded-lg shadow-md hover:scale-105 transition-transform duration-300 overflow-hidden">
-                <Image src="/event-7.png" alt="Blindfolded Conversations Event 7" width={200} height={200} className="w-full h-full object-cover" />
-              </div>
-              <div className="aspect-square rounded-lg shadow-md hover:scale-105 transition-transform duration-300 overflow-hidden">
-                <Image src="/event-8.png" alt="Blindfolded Conversations Event 8" width={200} height={200} className="w-full h-full object-cover" />
               </div>
             </div>
             <p className="text-sm text-center mt-4 text-gray-800">Event photos showcasing the successful execution of Blindfolded Conversations</p>
