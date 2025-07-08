@@ -7,16 +7,16 @@ import AOS from "aos";
 // Skill data
 const SKILLS = [
   // Frontend
-  { icon: <img src="/react.svg" alt="React" className="w-6 h-6" />, name: "React", category: "Frontend" },
-  { icon: <img src="/next.svg" alt="Next.js" className="w-6 h-6" />, name: "Next.js", category: "Frontend" },
-  { icon: <img src="/tailwind.svg" alt="Tailwind CSS" className="w-6 h-6" />, name: "Tailwind CSS", category: "Frontend" },
-  { icon: <img src="/html5.svg" alt="HTML5" className="w-6 h-6" />, name: "HTML5", category: "Frontend" },
-  { icon: <img src="/css3.svg" alt="CSS3" className="w-6 h-6" />, name: "CSS3", category: "Frontend" },
+  { icon: <Image src="/react.svg" alt="React" width={24} height={24} />, name: "React", category: "Frontend" },
+  { icon: <Image src="/next.svg" alt="Next.js" width={24} height={24} />, name: "Next.js", category: "Frontend" },
+  { icon: <Image src="/tailwind.svg" alt="Tailwind CSS" width={24} height={24} />, name: "Tailwind CSS", category: "Frontend" },
+  { icon: <Image src="/html5.svg" alt="HTML5" width={24} height={24} />, name: "HTML5", category: "Frontend" },
+  { icon: <Image src="/css3.svg" alt="CSS3" width={24} height={24} />, name: "CSS3", category: "Frontend" },
   { icon: "🔄", name: "Redux", category: "Frontend" },
   { icon: "🅰️", name: "Angular", category: "Frontend" },
   { icon: "🎯", name: "Bootstrap", category: "Frontend" },
   // Backend
-  { icon: <img src="/nodejs.svg" alt="Node.js" className="w-6 h-6" />, name: "Node.js", category: "Backend" },
+  { icon: <Image src="/nodejs.svg" alt="Node.js" width={24} height={24} />, name: "Node.js", category: "Backend" },
   { icon: "🚂", name: "Express.js", category: "Backend" },
   { icon: "🍃", name: "MongoDB", category: "Backend" },
   { icon: "🐬", name: "MySQL", category: "Backend" },
@@ -28,7 +28,7 @@ const SKILLS = [
   { icon: "☁️", name: "Google Cloud", category: "Cloud" },
   // Tools
   { icon: "🐙", name: "GitHub", category: "Tools" },
-  { icon: <img src="/vercel.svg" alt="Vercel" className="w-6 h-6" />, name: "Vercel", category: "Tools" },
+  { icon: <Image src="/vercel.svg" alt="Vercel" width={24} height={24} />, name: "Vercel", category: "Tools" },
   { icon: "🧪", name: "Jasmine", category: "Tools" },
   { icon: "⚡", name: "Karma", category: "Tools" },
   { icon: "📮", name: "Postman", category: "Tools" },
@@ -42,8 +42,8 @@ const SKILLS = [
   { icon: "📋", name: "Jira", category: "Tools" },
   { icon: "⚡", name: "Agile", category: "Tools" },
   // Languages
-  { icon: <img src="/java.svg" alt="Java" className="w-6 h-6" />, name: "Java", category: "Languages" },
-  { icon: <img src="/python.svg" alt="Python" className="w-6 h-6" />, name: "Python", category: "Languages" },
+  { icon: <Image src="/java.svg" alt="Java" width={24} height={24} />, name: "Java", category: "Languages" },
+  { icon: <Image src="/python.svg" alt="Python" width={24} height={24} />, name: "Python", category: "Languages" },
   { icon: "📘", name: "TypeScript", category: "Languages" },
   { icon: "📜", name: "JavaScript", category: "Languages" },
   { icon: "📊", name: "R", category: "Languages" },
@@ -152,7 +152,7 @@ export default function Home() {
                 <span className="text-2xl">💬</span>
               </div>
               <h3 className="text-3xl font-bold mb-2 bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent">Let&apos;s Connect!</h3>
-              <p className="text-gray-600">I'd love to hear from you!</p>
+              <p className="text-gray-600">I&apos;d love to hear from you!</p>
             </div>
             
             <div className="space-y-4">
