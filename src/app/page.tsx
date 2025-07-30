@@ -290,11 +290,11 @@ export default function Home() {
         <div className="w-36 h-36 rounded-full overflow-hidden border-4 border-[var(--accent)] shadow-lg mb-2 hover:scale-105 transition-transform duration-300">
           <Image src="/profile.jpg" alt="Profile" width={144} height={144} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" />
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 justify-center w-full">
           <Image src="/logo.svg" alt="Logo" width={40} height={40} />
-          <h1 className="text-4xl font-bold accent drop-shadow-lg hover:scale-105 transition-transform duration-300">Shambhavi Navranjan Kumar</h1>
+          <h1 className="text-3xl sm:text-4xl font-bold accent drop-shadow-lg hover:scale-105 transition-transform duration-300 text-center">Shambhavi Navranjan Kumar</h1>
           <button
-            className="ml-4 p-2 rounded-full border border-accent bg-white/70 dark:bg-gray-800/70 hover:bg-accent hover:text-white transition-colors duration-300 shadow"
+            className="ml-2 p-2 rounded-full border border-accent bg-white/70 dark:bg-gray-800/70 hover:bg-accent hover:text-white transition-colors duration-300 shadow"
             aria-label="Switch theme"
             onClick={() => setTheme(nextTheme)}
             title={`Switch to ${nextTheme} mode`}
