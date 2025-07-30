@@ -72,10 +72,11 @@ export default function Home() {
 
   useEffect(() => {
     AOS.init({ 
-      once: false, 
-      duration: 800, 
-      offset: 40,
-      easing: 'ease-out-cubic'
+      once: true, 
+      duration: 600, 
+      offset: 50,
+      easing: 'ease-out-cubic',
+      disable: 'mobile'
     });
   }, []);
 
@@ -89,20 +90,53 @@ export default function Home() {
 
   // Add state for active tab
   const [activeTab, setActiveTab] = useState("All");
+  
+  // Add state for scroll to top button
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  // Handle scroll events
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 300);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Scroll to top function
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
   return (
-    <div className={`relative min-h-screen p-4 sm:p-10 flex flex-col items-center font-sans overflow-x-hidden 
-      ${theme === 'glass' ? 'bg-gradient-to-br from-pink-200 via-yellow-100 to-blue-200 text-black' : ''}
-      ${theme === 'light' ? 'bg-white text-black' : ''}
-      ${theme === 'dark' ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-white' : ''}
-    `}>
+    <>
+      <style jsx global>{`
+        html {
+          scroll-behavior: smooth;
+        }
+        body {
+          overflow-x: hidden;
+        }
+        * {
+          scroll-behavior: smooth;
+        }
+      `}</style>
+      <div className={`relative min-h-screen p-4 sm:p-10 flex flex-col items-center font-sans overflow-x-hidden scroll-smooth 
+        ${theme === 'glass' ? 'bg-gradient-to-br from-pink-200 via-yellow-100 to-blue-200 text-black' : ''}
+        ${theme === 'light' ? 'bg-white text-black' : ''}
+        ${theme === 'dark' ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-white' : ''}
+      `}>
       {/* Animated SVG background pattern */}
       <svg className="absolute top-0 left-0 w-full h-64 opacity-10 z-0" style={{animation: 'pulse 4s ease-in-out infinite'}} viewBox="0 0 1440 320">
         <path fill="#800000" fillOpacity="1" d="M0,160L60,170.7C120,181,240,203,360,197.3C480,192,600,160,720,133.3C840,107,960,85,1080,101.3C1200,117,1320,171,1380,197.3L1440,224L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path>
       </svg>
 
       {/* Animated Background Elements */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 will-change-transform">
         {/* Floating Particles */}
         <div className="absolute top-20 left-10 w-2 h-2 bg-accent rounded-full animate-float opacity-30"></div>
         <div className="absolute top-40 right-20 w-1 h-1 bg-accent-light rounded-full animate-float" style={{animationDelay: '1s', animationDuration: '4s'}}></div>
@@ -154,15 +188,15 @@ export default function Home() {
 
       {/* Floating Contact Button */}
       <button
-        className="fixed bottom-8 right-8 z-50 bg-accent text-white rounded-full shadow-lg p-4 transition-all duration-300 flex items-center gap-2"
+        className="fixed bottom-8 right-8 z-50 bg-accent text-white rounded-full shadow-lg p-4 transition-all duration-300 flex items-center gap-2 hover:scale-105 hover:shadow-xl"
         onClick={() => setShowContact(true)}
         aria-label="Contact Me"
       >
         📞 Contact Me
       </button>
       {showContact && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 animate-fadeIn" onClick={() => setShowContact(false)}>
-          <div className="bg-gradient-to-br from-pink-100 via-yellow-50 to-blue-100 text-black rounded-2xl p-8 shadow-2xl relative min-w-[400px] max-w-[500px] animate-scaleIn border border-gray-200" onClick={e => e.stopPropagation()}>
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 animate-fadeIn overflow-y-auto p-4" onClick={() => setShowContact(false)}>
+          <div className="bg-gradient-to-br from-pink-100 via-yellow-50 to-blue-100 text-black rounded-2xl p-8 shadow-2xl relative min-w-[400px] max-w-[500px] animate-scaleIn border border-gray-200 my-8" onClick={e => e.stopPropagation()}>
             <button className="absolute top-4 right-4 text-2xl hover:scale-110 transition-transform text-gray-500 hover:text-gray-700" onClick={() => setShowContact(false)}>&times;</button>
             
             <div className="text-center mb-8">
@@ -236,6 +270,19 @@ export default function Home() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Scroll to Top Button */}
+      {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-8 left-8 z-50 bg-accent text-white rounded-full shadow-lg p-3 transition-all duration-300 hover:scale-110 hover:shadow-xl"
+          aria-label="Scroll to top"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+          </svg>
+        </button>
       )}
 
       {/* Hero Section */}
@@ -827,6 +874,7 @@ export default function Home() {
         </div>
       </section>
     </div>
+    </>
   );
 }
 
