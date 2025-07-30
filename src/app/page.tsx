@@ -280,7 +280,7 @@ export default function Home() {
             {
               title: "🤖 AI/Software Intern",
               company: "Brain and Body Autism Center, Mountain View, CA, USA",
-              dates: "(Jun 2025 - Aug 2025)",
+              dates: "(Jun 2025 - Present)",
               points: [
                 "Developed iOS-based AI-powered AAC app for non-verbal autistic children using on-device LLMs",
                 "Enhanced communication personalization by 40% through contextual AI implementation",
@@ -290,7 +290,7 @@ export default function Home() {
             {
               title: "🎮 Project Manager (Game Development) Intern",
               company: "Resilience Inc. (Remote), USA",
-              dates: "(Jun 2025 - Oct 2025)",
+              dates: "(Jun 2025 - Present)",
               points: [
                 "Led cross-functional teams to relaunch digital education tools, expanding user adoption by 35%",
                 "Managed project timelines and facilitated weekly progress reviews for strategic alignment",
@@ -360,7 +360,9 @@ export default function Home() {
           ].map((job, index) => (
             <div 
               key={index}
-              className="bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col items-start border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-500 hover:scale-[1.02] hover:bg-white/95 hover-lift"
+              className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col items-start border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-500 hover:scale-[1.02] hover-lift ${
+                theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
+              }`}
               data-aos="slide-in-left"
               data-aos-delay={index * 150}
             >
@@ -411,7 +413,9 @@ export default function Home() {
           ].map((edu, index) => (
             <div 
               key={index}
-              className="bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col items-start border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-500 hover:scale-105 hover:bg-white/95 hover-lift group"
+              className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col items-start border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-500 hover:scale-105 hover-lift group ${
+                theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
+              }`}
               data-aos="slide-in-bottom"
               data-aos-delay={index * 200}
             >
@@ -424,6 +428,59 @@ export default function Home() {
               </ul>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Ambassador Roles */}
+      <section className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
+        <div className="flex items-center gap-3 mb-4">
+          <span className="text-3xl animate-pulse">🌟</span>
+          <h2 className="text-3xl font-bold accent text-left hover:text-accent-light transition-colors">Ambassador Roles</h2>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6" data-aos="fade-up" data-aos-delay="200">
+          <div 
+            className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-6 flex flex-col items-start border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-500 hover:scale-105 hover-lift group ${
+              theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
+            }`}
+            data-aos="slide-in-left"
+            data-aos-delay="100"
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300">
+                <Image src="/adobe-logo.png" alt="Adobe Logo" width={48} height={48} />
+              </div>
+              <div className="font-bold text-xl hover:text-accent-light transition-colors duration-300 group-hover:scale-105">Adobe Student Ambassador</div>
+            </div>
+            <div className="text-base mb-3 text-gray-800">Representing Adobe's creative tools and technologies to the student community</div>
+            <ul className="list-disc pl-4 text-base space-y-2">
+              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Promoting Adobe's creative software solutions</li>
+              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Organizing workshops and training sessions</li>
+              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Supporting student community with design tools</li>
+              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Building creative skills and digital literacy</li>
+            </ul>
+          </div>
+          
+          <div 
+            className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-6 flex flex-col items-start border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-500 hover:scale-105 hover-lift group ${
+              theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
+            }`}
+            data-aos="slide-in-right"
+            data-aos-delay="200"
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300">
+                <Image src="/fetch-ai-logo.svg" alt="Fetch AI Logo" width={48} height={48} />
+              </div>
+              <div className="font-bold text-xl hover:text-accent-light transition-colors duration-300 group-hover:scale-105">Fetch AI Innovation Ambassador</div>
+            </div>
+            <div className="text-base mb-3 text-gray-800">Leading innovation initiatives and AI adoption in the academic community</div>
+            <ul className="list-disc pl-4 text-base space-y-2">
+              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Advocating for AI innovation and adoption</li>
+              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Facilitating AI workshops and demonstrations</li>
+              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Connecting students with cutting-edge AI technologies</li>
+              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Promoting responsible AI development and usage</li>
+            </ul>
+          </div>
         </div>
       </section>
 
@@ -455,7 +512,9 @@ export default function Home() {
           ].map((project, index) => (
             <div 
               key={index}
-              className="bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col items-start border-2 border-accent min-h-[220px] hover:border-accent-light hover:shadow-accent/30 transition-all duration-500 hover:scale-105 hover:bg-white/95 hover-lift group text-gray-900"
+              className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col items-start border-2 border-accent min-h-[220px] hover:border-accent-light hover:shadow-accent/30 transition-all duration-500 hover:scale-105 hover-lift group ${
+                theme === 'dark' ? 'hover:bg-gray-800/95 text-white' : 'hover:bg-white/95 text-gray-900'
+              }`}
               data-aos="slide-in-right"
               data-aos-delay={index * 300}
             >
@@ -515,38 +574,50 @@ export default function Home() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
           {/* Advanced Google Analytics */}
-          <div className="bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-300 hover:scale-105 hover:bg-white/95 hover-lift" data-aos="zoom-in" data-aos-delay="100">
+          <div className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-300 hover:scale-105 hover-lift ${
+            theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
+          }`} data-aos="zoom-in" data-aos-delay="100">
             <div className="font-bold text-lg mb-1">Advanced Google Analytics</div>
             <div className="text-base mb-1 text-gray-800">Google Analytics Academy</div>
             <div className="text-sm mb-1">Issued Feb 2023 · Expires Apr 2026</div>
           </div>
           {/* Managing Project Risks and Changes */}
-          <div className="bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-300 hover:scale-105 hover:bg-white/95 hover-lift" data-aos="zoom-in" data-aos-delay="200">
+          <div className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-300 hover:scale-105 hover-lift ${
+            theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
+          }`} data-aos="zoom-in" data-aos-delay="200">
             <div className="font-bold text-lg mb-1">Managing Project Risks and Changes</div>
             <div className="text-base mb-1 text-gray-800">Coursera</div>
             <div className="text-sm mb-1">Issued Jul 2020</div>
           </div>
           {/* SQL for Data Science */}
-          <div className="bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-300 hover:scale-105 hover:bg-white/95 hover-lift" data-aos="zoom-in" data-aos-delay="300">
+          <div className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-300 hover:scale-105 hover-lift ${
+            theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
+          }`} data-aos="zoom-in" data-aos-delay="300">
             <div className="font-bold text-lg mb-1">SQL for Data Science</div>
             <div className="text-base mb-1 text-gray-800">Coursera</div>
             <div className="text-sm mb-1">Issued Jul 2020</div>
           </div>
           {/* Google Analytics for Beginners */}
-          <div className="bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-300 hover:scale-105 hover:bg-white/95 hover-lift" data-aos="zoom-in" data-aos-delay="400">
+          <div className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-300 hover:scale-105 hover-lift ${
+            theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
+          }`} data-aos="zoom-in" data-aos-delay="400">
             <div className="font-bold text-lg mb-1">Google Analytics for Beginners</div>
             <div className="text-base mb-1 text-gray-800">Google Analytics Academy</div>
             <div className="text-sm mb-1">Issued Jun 2020</div>
           </div>
           {/* Initiating and Planning Projects */}
-          <div className="bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-300 hover:scale-105 hover:bg-white/95 hover-lift" data-aos="zoom-in" data-aos-delay="500">
+          <div className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-300 hover:scale-105 hover-lift ${
+            theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
+          }`} data-aos="zoom-in" data-aos-delay="500">
             <div className="font-bold text-lg mb-1">Initiating and Planning Projects</div>
             <div className="text-base mb-1 text-gray-800">Coursera</div>
             <div className="text-sm mb-1">Issued Jun 2020</div>
             <div className="text-xs mb-1 text-gray-400">Credential ID VVKFP6SFDELC</div>
           </div>
           {/* Introduction to Google Docs */}
-          <div className="bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-300 hover:scale-105 hover:bg-white/95 hover-lift" data-aos="zoom-in" data-aos-delay="600">
+          <div className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-300 hover:scale-105 hover-lift ${
+            theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
+          }`} data-aos="zoom-in" data-aos-delay="600">
             <div className="font-bold text-lg mb-1">Introduction to Google Docs</div>
             <div className="text-base mb-1 text-gray-800">Coursera</div>
             <div className="text-sm mb-1">Issued Jun 2020</div>
@@ -575,7 +646,9 @@ export default function Home() {
         </div>
         <div className="grid grid-cols-1 gap-4 mt-6" data-aos="fade-up" data-aos-delay="200">
           {/* Achievements */}
-          <div className="bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-500 hover:scale-105 hover:bg-white/95 hover-lift group" data-aos="slide-in-left" data-aos-delay="100">
+          <div className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-500 hover:scale-105 hover-lift group ${
+            theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
+          }`} data-aos="slide-in-left" data-aos-delay="100">
             <div className="font-bold text-lg mb-3 hover:text-accent-light transition-colors duration-300 group-hover:scale-105">🏅 Achievements</div>
             <ul className="list-disc pl-4 text-base space-y-2">
               <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Secured first division in Kathak</li>
@@ -585,7 +658,9 @@ export default function Home() {
           </div>
           
           {/* Extra-Curricular Activities */}
-          <div className="bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-500 hover:scale-105 hover:bg-white/95 hover-lift group" data-aos="slide-in-right" data-aos-delay="200">
+          <div className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-500 hover:scale-105 hover-lift group ${
+            theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
+          }`} data-aos="slide-in-right" data-aos-delay="200">
             <div className="font-bold text-lg mb-3 hover:text-accent-light transition-colors duration-300 group-hover:scale-105">🎭 Extra-Curricular Activities</div>
             <ul className="list-disc pl-4 text-base space-y-2">
               <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Part of Hindu-Yuva Club, SJSU</li>
@@ -607,20 +682,30 @@ export default function Home() {
           <span className="text-3xl animate-pulse">💼</span>
           <h2 className="text-3xl font-bold accent text-left hover:text-accent-light transition-colors">Entrepreneurship</h2>
         </div>
-        <div className="bg-white/30 backdrop-blur-md border border-white/40 rounded-2xl shadow-2xl p-8 border-2 border-accent hover:shadow-accent/50 transition-all duration-300 hover:scale-[1.02]" data-aos="zoom-in" data-aos-delay="200">
+        <div className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-2xl shadow-2xl p-8 border-2 border-accent hover:shadow-accent/50 transition-all duration-300 hover:scale-[1.02] ${
+          theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
+        }`} data-aos="zoom-in" data-aos-delay="200">
           <div className="text-center">
             <div className="font-bold text-xl mb-4 hover:text-accent-light transition-colors duration-300">💎 Coffer Chics</div>
             <p className="text-base mb-4">Founded and operated a successful Instagram-based jewellery business in India, specializing in handmade custom jewellery, demonstrating entrepreneurial spirit and digital marketing skills.</p>
             <p className="text-base mb-4">Instagram: <a href="https://www.instagram.com/coffer_chics" target="_blank" rel="noopener noreferrer" className="text-accent underline hover:no-underline hover:text-accent-light transition-colors">@coffer_chics</a></p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
-              <div className="bg-gradient-to-br from-pink-50 via-white to-yellow-100 rounded-xl p-4 border border-accent">
-                <div className="font-semibold text-lg mb-2">🚀 Growth</div>
-                <p className="text-sm">Rapidly growing Instagram presence with engaged customer base</p>
-              </div>
-              <div className="bg-gradient-to-br from-pink-50 via-white to-yellow-100 rounded-xl p-4 border border-accent">
-                <div className="font-semibold text-lg mb-2">✨ Handcrafted</div>
-                <p className="text-sm">Specialized in handmade custom jewellery with unique designs</p>
-              </div>
+              {[
+                { icon: "🚀", title: "Growth", desc: "Rapidly growing Instagram presence with engaged customer base" },
+                { icon: "✨", title: "Handcrafted", desc: "Specialized in handmade custom jewellery with unique designs" },
+              ].map((card, idx) => (
+                <div
+                  key={card.title}
+                  className={`rounded-xl p-4 border border-accent transition-all duration-300 ${
+                    theme === 'dark'
+                      ? 'bg-gray-800/80 text-white'
+                      : 'bg-gradient-to-br from-pink-50 via-white to-yellow-100 text-gray-900'
+                  }`}
+                >
+                  <div className="font-semibold text-lg mb-2">{card.icon} {card.title}</div>
+                  <p className="text-sm">{card.desc}</p>
+                </div>
+              ))}
             </div>
             <div className="mt-8">
               <div className="font-semibold text-lg mb-4 text-center">📸 Featured Posts</div>
@@ -663,37 +748,35 @@ export default function Home() {
           <span className="text-3xl animate-pulse">🎪</span>
           <h2 className="text-3xl font-bold accent text-left hover:text-accent-light transition-colors">Event Management</h2>
         </div>
-        <div className="bg-white/30 backdrop-blur-md border border-white/40 rounded-2xl shadow-2xl p-8 border-2 border-accent hover:shadow-accent/50 transition-all duration-300 hover:scale-[1.02]" data-aos="zoom-in" data-aos-delay="200">
+        <div className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-2xl shadow-2xl p-8 border-2 border-accent hover:shadow-accent/50 transition-all duration-300 hover:scale-[1.02] ${
+          theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
+        }`} data-aos="zoom-in" data-aos-delay="200">
           <div className="text-center mb-6">
             <div className="font-bold text-2xl mb-4 hover:text-accent-light transition-colors duration-300">🎭 Blindfolded Conversations</div>
             <p className="text-base mb-4">Successfully organized and managed a two-day collaborative event with Lush House cafe in Nagpur, demonstrating comprehensive event management skills.</p>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div className="bg-gradient-to-br from-yellow-50 via-white to-orange-100 rounded-xl p-4 border border-accent">
-              <div className="font-semibold text-lg mb-2">📱 Social Media Marketing</div>
-              <p className="text-sm">Managed complete social media marketing campaign, created posters and hard banners using Photoshop and Canva</p>
-            </div>
-            <div className="bg-gradient-to-br from-yellow-50 via-white to-orange-100 rounded-xl p-4 border border-accent">
-              <div className="font-semibold text-lg mb-2">🎨 Event Decor</div>
-              <p className="text-sm">Handled complete event decoration and visual setup for the two-day event</p>
-            </div>
-            <div className="bg-gradient-to-br from-yellow-50 via-white to-orange-100 rounded-xl p-4 border border-accent">
-              <div className="font-semibold text-lg mb-2">📊 Event Success</div>
-              <p className="text-sm">Achieved 500+ footfall with media coverage from newspaper reporters</p>
-            </div>
-            <div className="bg-gradient-to-br from-yellow-50 via-white to-orange-100 rounded-xl p-4 border border-accent">
-              <div className="font-semibold text-lg mb-2">🤝 Collaboration</div>
-              <p className="text-sm">Partnered with Lush House cafe in Nagpur for successful event execution</p>
-            </div>
-            <div className="bg-gradient-to-br from-yellow-50 via-white to-orange-100 rounded-xl p-4 border border-accent">
-              <div className="font-semibold text-lg mb-2">📰 Media Coverage</div>
-              <p className="text-sm">Event was covered by newspaper reporters, highlighting its success and impact</p>
-            </div>
-            <div className="bg-gradient-to-br from-yellow-50 via-white to-orange-100 rounded-xl p-4 border border-accent">
-              <div className="font-semibold text-lg mb-2">🎯 Project Management</div>
-              <p className="text-sm">Coordinated all aspects from planning to execution, ensuring seamless event delivery</p>
-            </div>
+          <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4`}>
+            {[
+              { icon: "📱", title: "Social Media Marketing", desc: "Managed complete social media marketing campaign, created posters and hard banners using Photoshop and Canva" },
+              { icon: "🎨", title: "Event Decor", desc: "Handled complete event decoration and visual setup for the two-day event" },
+              { icon: "📊", title: "Event Success", desc: "Achieved 500+ footfall with media coverage from newspaper reporters" },
+              { icon: "��", title: "Collaboration", desc: "Partnered with Lush House cafe in Nagpur for successful event execution" },
+              { icon: "📰", title: "Media Coverage", desc: "Event was covered by newspaper reporters, highlighting its success and impact" },
+              { icon: "🎯", title: "Project Management", desc: "Coordinated all aspects from planning to execution, ensuring seamless event delivery" },
+            ].map((card, idx) => (
+              <div
+                key={card.title}
+                className={`rounded-xl p-4 border border-accent transition-all duration-300 ${
+                  theme === 'dark'
+                    ? 'bg-gray-800/80 text-white'
+                    : 'bg-gradient-to-br from-yellow-50 via-white to-orange-100 text-gray-900'
+                }`}
+              >
+                <div className="font-semibold text-lg mb-2">{card.icon} {card.title}</div>
+                <p className="text-sm">{card.desc}</p>
+              </div>
+            ))}
           </div>
           
           <div className="mt-8">
