@@ -93,6 +93,7 @@ export default function Home() {
   
   // Add state for scroll to top button
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [showNavMenu, setShowNavMenu] = useState(false);
 
   // Handle scroll events
   useEffect(() => {
@@ -110,6 +111,29 @@ export default function Home() {
       top: 0,
       behavior: 'smooth'
     });
+  };
+
+  // Navigation sections
+  const navSections = [
+    { id: 'experience', label: 'Experience', icon: '💼' },
+    { id: 'education', label: 'Education', icon: '🎓' },
+    { id: 'ambassador', label: 'Ambassador', icon: '🌟' },
+    { id: 'projects', label: 'Projects', icon: '🚀' },
+    { id: 'skills', label: 'Skills', icon: '🛠️' },
+    { id: 'certifications', label: 'Certifications', icon: '📜' },
+    { id: 'achievements', label: 'Achievements', icon: '🏆' },
+    { id: 'entrepreneurship', label: 'Entrepreneurship', icon: '💎' },
+    { id: 'events', label: 'Events', icon: '🎪' },
+    { id: 'resume', label: 'Resume', icon: '📄' }
+  ];
+
+  // Scroll to section function
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setShowNavMenu(false);
   };
 
   return (
@@ -272,6 +296,46 @@ export default function Home() {
         </div>
       )}
 
+      {/* Navigation Menu Button */}
+      <button
+        onClick={() => setShowNavMenu(!showNavMenu)}
+        className="fixed top-8 left-8 z-50 bg-accent text-white rounded-full shadow-lg p-3 transition-all duration-300 hover:scale-110 hover:shadow-xl"
+        aria-label="Navigation menu"
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
+      {/* Navigation Menu */}
+      {showNavMenu && (
+        <div className="fixed inset-0 bg-black/60 z-40" onClick={() => setShowNavMenu(false)}>
+          <div className="absolute top-20 left-8 bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-6 min-w-[280px] animate-scaleIn border border-gray-200" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-bold text-gray-800">Quick Navigation</h3>
+              <button 
+                onClick={() => setShowNavMenu(false)}
+                className="text-gray-500 hover:text-gray-700 text-xl"
+              >
+                ×
+              </button>
+            </div>
+            <div className="grid grid-cols-1 gap-2">
+              {navSections.map((section) => (
+                <button
+                  key={section.id}
+                  onClick={() => scrollToSection(section.id)}
+                  className="flex items-center gap-3 p-3 rounded-xl hover:bg-accent/10 transition-all duration-300 text-left group"
+                >
+                  <span className="text-xl">{section.icon}</span>
+                  <span className="font-medium text-gray-700 group-hover:text-accent">{section.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Scroll to Top Button */}
       {showScrollTop && (
         <button
@@ -317,7 +381,7 @@ export default function Home() {
       </section>
 
       {/* Work Experience */}
-      <section className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
+      <section id="experience" className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
         <div className="flex items-center gap-3 mb-4">
           <span className="text-3xl animate-bounce">💼</span>
           <h2 className="text-3xl font-bold accent text-left hover:text-accent-light transition-colors">Work Experience</h2>
@@ -429,7 +493,7 @@ export default function Home() {
       </section>
 
       {/* Education */}
-      <section className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
+      <section id="education" className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
         <div className="flex items-center gap-3 mb-4">
           <span className="text-3xl animate-pulse">🎓</span>
           <h2 className="text-3xl font-bold accent text-left hover:text-accent-light transition-colors">Education</h2>
@@ -479,7 +543,7 @@ export default function Home() {
       </section>
 
       {/* Ambassador Roles */}
-      <section className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
+      <section id="ambassador" className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
         <div className="flex items-center gap-3 mb-4">
           <span className="text-3xl animate-pulse">🌟</span>
           <h2 className="text-3xl font-bold accent text-left hover:text-accent-light transition-colors">Ambassador Roles</h2>
@@ -532,7 +596,7 @@ export default function Home() {
       </section>
 
       {/* Project Experience */}
-      <section className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
+      <section id="projects" className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
         <div className="flex items-center gap-3 mb-4">
           <span className="text-3xl animate-pulse">🚀</span>
           <h2 className="text-3xl font-bold accent text-left hover:text-accent-light transition-colors">Project Experience</h2>
@@ -578,7 +642,7 @@ export default function Home() {
       </section>
 
       {/* Technical Skills */}
-      <section className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
+      <section id="skills" className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
         <div className="flex items-center gap-3 mb-6">
           <span className="text-3xl animate-spin-slow">🛠️</span>
           <h2 className="text-3xl font-bold accent text-left hover:text-accent-light transition-colors">Technical Skills</h2>
@@ -614,7 +678,7 @@ export default function Home() {
       </section>
 
       {/* Certifications */}
-      <section className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
+      <section id="certifications" className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
         <div className="flex items-center gap-3 mb-4">
           <span className="text-3xl animate-pulse">🎓</span>
           <h2 className="text-3xl font-bold accent text-left hover:text-accent-light transition-colors">Certifications</h2>
@@ -686,7 +750,7 @@ export default function Home() {
       </section>
 
       {/* Extra-Curricular Activities & Achievements */}
-      <section className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
+      <section id="achievements" className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
         <div className="flex items-center gap-3 mb-4">
           <span className="text-3xl animate-pulse">🏆</span>
           <h2 className="text-3xl font-bold accent text-left hover:text-accent-light transition-colors">Extra-Curricular Activities & Achievements</h2>
@@ -724,7 +788,7 @@ export default function Home() {
       </section>
 
       {/* Entrepreneurship */}
-      <section className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
+      <section id="entrepreneurship" className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
         <div className="flex items-center gap-3 mb-4">
           <span className="text-3xl animate-pulse">💼</span>
           <h2 className="text-3xl font-bold accent text-left hover:text-accent-light transition-colors">Entrepreneurship</h2>
@@ -790,7 +854,7 @@ export default function Home() {
       </section>
 
       {/* Event Management */}
-      <section className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
+      <section id="events" className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
         <div className="flex items-center gap-3 mb-4">
           <span className="text-3xl animate-pulse">🎪</span>
           <h2 className="text-3xl font-bold accent text-left hover:text-accent-light transition-colors">Event Management</h2>
@@ -855,7 +919,7 @@ export default function Home() {
       </section>
 
       {/* Download Resume */}
-      <section className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
+      <section id="resume" className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
         <div className="flex items-center gap-3 mb-4">
           <span className="text-3xl animate-pulse">📄</span>
           <h2 className="text-3xl font-bold accent text-left hover:text-accent-light transition-colors">Resume</h2>
