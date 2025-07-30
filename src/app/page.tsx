@@ -451,9 +451,9 @@ export default function Home() {
               </div>
               <div className="font-bold text-xl hover:text-accent-light transition-colors duration-300 group-hover:scale-105">Adobe Student Ambassador</div>
             </div>
-            <div className="text-base mb-3 text-gray-800">Representing Adobe's creative tools and technologies to the student community</div>
+            <div className="text-base mb-3 text-gray-800">Representing Adobe&apos;s creative tools and technologies to the student community</div>
             <ul className="list-disc pl-4 text-base space-y-2">
-              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Promoting Adobe's creative software solutions</li>
+              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Promoting Adobe&apos;s creative software solutions</li>
               <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Organizing workshops and training sessions</li>
               <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Supporting student community with design tools</li>
               <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Building creative skills and digital literacy</li>
@@ -693,7 +693,7 @@ export default function Home() {
               {[
                 { icon: "🚀", title: "Growth", desc: "Rapidly growing Instagram presence with engaged customer base" },
                 { icon: "✨", title: "Handcrafted", desc: "Specialized in handmade custom jewellery with unique designs" },
-              ].map((card, idx) => (
+              ].map((card) => (
                 <div
                   key={card.title}
                   className={`rounded-xl p-4 border border-accent transition-all duration-300 ${
@@ -764,7 +764,7 @@ export default function Home() {
               { icon: "��", title: "Collaboration", desc: "Partnered with Lush House cafe in Nagpur for successful event execution" },
               { icon: "📰", title: "Media Coverage", desc: "Event was covered by newspaper reporters, highlighting its success and impact" },
               { icon: "🎯", title: "Project Management", desc: "Coordinated all aspects from planning to execution, ensuring seamless event delivery" },
-            ].map((card, idx) => (
+            ].map((card) => (
               <div
                 key={card.title}
                 className={`rounded-xl p-4 border border-accent transition-all duration-300 ${
