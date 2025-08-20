@@ -375,7 +375,7 @@ export default function Home() {
           <h2 className="text-3xl font-bold accent text-left hover:text-accent-light transition-colors">Objective</h2>
         </div> */}
         <div className="bg-white/30 backdrop-blur-md border border-white/40 rounded-2xl shadow-2xl p-8 border-2 border-accent hover:shadow-accent/50 transition-all duration-300 hover:scale-[1.02]">
-          <p className="text-base">Front-End Developer with 4 years of experience building responsive web applications, now pursuing a Master&apos;s in Engineering Management to combine technical and leadership skills for scalable solutions.</p>
+          <p className="text-base">Aspiring Product/Project Manager with 4 years of technical experience in software engineering and product delivery. Currently pursuing a Master&apos;s in Engineering Management to bridge business strategy, technology, and leadership for scalable, impactful solutions.</p>
           <p className="italic accent mt-2 text-base">Currently based in San Jose, California, USA.</p>
         </div>
       </section>
@@ -406,7 +406,8 @@ export default function Home() {
                 "Developed iOS-based AI-powered AAC app for non-verbal autistic children using on-device LLMs",
                 "Enhanced communication personalization by 40% through contextual AI implementation",
                 "Collaborated with clinical experts to improve UI/UX, boosting therapy usability by 60%"
-              ]
+              ],
+              link: "https://www.tejutalks.com" 
             },
             {
               title: "🧑‍💻 Software Product and Platform Engineering Analyst",
@@ -487,6 +488,19 @@ export default function Home() {
                   <li key={pointIndex} className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">{point}</li>
                 ))}
               </ul>
+              {job.link && (
+                <div className="mt-3 w-full">
+                  <a 
+                    href={job.link} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-accent text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-accent-light hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
+                  >
+                    <span>🔗</span>
+                    View Project
+                  </a>
+                </div>
+              )}
             </div>
           ))}
         </div>
