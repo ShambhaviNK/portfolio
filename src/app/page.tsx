@@ -389,23 +389,23 @@ export default function Home() {
         <div className="grid grid-cols-1 gap-4" data-aos="fade-up" data-aos-delay="200">
           {[
             {
-              title: "🤖 AI/Software Intern",
-              company: "Brain and Body Autism Center, Mountain View, CA, USA",
-              dates: "(Jun 2025 - Present)",
-              points: [
-                "Developed iOS-based AI-powered AAC app for non-verbal autistic children using on-device LLMs",
-                "Enhanced communication personalization by 40% through contextual AI implementation",
-                "Collaborated with clinical experts to improve UI/UX, boosting therapy usability by 60%"
-              ]
-            },
-            {
               title: "🎮 Project Manager (Game Development) Intern",
               company: "Resilience Inc. (Remote), USA",
-              dates: "(Jun 2025 - Present)",
+              dates: "(Present)",
               points: [
                 "Led cross-functional teams to relaunch digital education tools, expanding user adoption by 35%",
                 "Managed project timelines and facilitated weekly progress reviews for strategic alignment",
                 "Built partnerships with 50+ schools to deploy gamified social-emotional learning content"
+              ]
+            },
+            {
+              title: "🤖 AI/Software Intern",
+              company: "Brain and Body Autism Center, Mountain View, CA, USA",
+              dates: "(Jun 2025 - Aug 2025)",
+              points: [
+                "Developed iOS-based AI-powered AAC app for non-verbal autistic children using on-device LLMs",
+                "Enhanced communication personalization by 40% through contextual AI implementation",
+                "Collaborated with clinical experts to improve UI/UX, boosting therapy usability by 60%"
               ]
             },
             {
