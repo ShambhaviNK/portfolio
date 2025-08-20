@@ -220,77 +220,77 @@ export default function Home() {
       </button>
       {showContact && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 animate-fadeIn overflow-y-auto p-4" onClick={() => setShowContact(false)}>
-          <div className="bg-gradient-to-br from-pink-100 via-yellow-50 to-blue-100 text-black rounded-2xl p-6 shadow-2xl relative min-w-[320px] max-w-[400px] animate-scaleIn border border-gray-200 my-8" onClick={e => e.stopPropagation()}>
-            <button className="absolute top-4 right-4 text-2xl hover:scale-110 transition-transform text-gray-500 hover:text-gray-700" onClick={() => setShowContact(false)}>&times;</button>
+                      <div className={`bg-gradient-to-br from-pink-100 via-yellow-50 to-blue-100 ${theme === 'dark' ? 'from-gray-800 via-gray-700 to-gray-600' : ''} ${theme === 'dark' ? 'text-white' : 'text-black'} rounded-2xl p-6 shadow-2xl relative min-w-[320px] max-w-[400px] animate-scaleIn border border-gray-200 my-8`} onClick={e => e.stopPropagation()}>
+            <button className={`absolute top-4 right-4 text-2xl hover:scale-110 transition-transform ${theme === 'dark' ? 'text-gray-300 hover:text-white' : 'text-gray-500 hover:text-gray-700'}`} onClick={() => setShowContact(false)}>&times;</button>
             
             <div className="text-center mb-6">
               <div className="w-12 h-12 bg-gradient-to-br from-accent to-accent-light rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg">
                 <span className="text-xl">💬</span>
               </div>
               <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent">Let&apos;s Connect!</h3>
-              <p className="text-gray-600 text-sm">I&apos;d love to hear from you!</p>
+              <p className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>I&apos;d love to hear from you!</p>
             </div>
             
             <div className="space-y-3">
-              <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-gray-100 transition-colors duration-300 group">
+              <div className={`flex items-center gap-3 p-2 rounded-xl ${theme === 'dark' ? 'hover:bg-gray-600' : 'hover:bg-gray-100'} transition-colors duration-300 group`}>
                 <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
                   <Image src="/gmail_logo.png" alt="Gmail" width={20} height={20} />
                 </div>
                 <div className="flex-1">
-                  <p className="text-xs text-gray-500">Email</p>
+                  <p className={`text-xs ${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'}`}>Email</p>
                   <a href="mailto:shambhavinavranjankumar@gmail.com" className="text-accent hover:text-accent-light transition-colors font-medium text-sm">shambhavinavranjankumar@gmail.com</a>
                 </div>
               </div>
               
-              <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-gray-100 transition-colors duration-300 group">
+              <div className={`flex items-center gap-3 p-2 rounded-xl ${theme === 'dark' ? 'hover:bg-gray-600' : 'hover:bg-gray-100'} transition-colors duration-300 group`}>
                 <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
                   <span className="text-green-600 text-sm">📞</span>
                 </div>
                 <div className="flex-1">
-                  <p className="text-xs text-gray-500">Phone</p>
+                  <p className={`text-xs ${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'}`}>Phone</p>
                   <a href="tel:6692104314" className="text-accent hover:text-accent-light transition-colors font-medium text-sm">669-210-4314</a>
                 </div>
               </div>
               
-              <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-gray-100 transition-colors duration-300 group">
+              <div className={`flex items-center gap-3 p-2 rounded-xl ${theme === 'dark' ? 'hover:bg-gray-600' : 'hover:bg-gray-100'} transition-colors duration-300 group`}>
                 <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
                   <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                   </svg>
                 </div>
                 <div className="flex-1">
-                  <p className="text-xs text-gray-500">LinkedIn</p>
+                  <p className={`text-xs ${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'}`}>LinkedIn</p>
                   <a href="http://linkedin.com/in/shambhavinkumar" target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent-light transition-colors font-medium text-sm">/shambhavinkumar</a>
                 </div>
               </div>
               
-              <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-gray-100 transition-colors duration-300 group">
+              <div className={`flex items-center gap-3 p-2 rounded-xl ${theme === 'dark' ? 'hover:bg-gray-600' : 'hover:bg-gray-100'} transition-colors duration-300 group`}>
                 <div className="w-8 h-8 bg-pink-100 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
                   <svg className="w-4 h-4 text-pink-600" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5A4.25 4.25 0 0 0 16.25 3.5zm4.25 2.75a5.75 5.75 0 1 1-5.75 5.75 5.75 5.75 0 0 1 5.75-5.75zm0 1.5a4.25 4.25 0 1 0 4.25 4.25 4.25 4.25 0 0 0-4.25-4.25zm5.25 1.25a1 1 0 1 1-1 1 1 1 0 0 1 1-1z"/>
                   </svg>
                 </div>
                 <div className="flex-1">
-                  <p className="text-xs text-gray-500">Instagram</p>
+                  <p className={`text-xs ${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'}`}>Instagram</p>
                   <a href="https://www.instagram.com/shambhavi_123" target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent-light transition-colors font-medium text-sm">@shambhavi_123</a>
                 </div>
               </div>
               
-              <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-gray-100 transition-colors duration-300 group">
+              <div className={`flex items-center gap-3 p-2 rounded-xl ${theme === 'dark' ? 'hover:bg-gray-600' : 'hover:bg-gray-100'} transition-colors duration-300 group`}>
                 <div className="w-8 h-8 bg-sky-100 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
                   <svg className="w-4 h-4 text-sky-600" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
                   </svg>
                 </div>
                 <div className="flex-1">
-                  <p className="text-xs text-gray-500">Twitter</p>
+                  <p className={`text-xs ${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'}`}>Twitter</p>
                   <a href="https://twitter.com/Shambhavi_123" target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent-light transition-colors font-medium text-sm">@Shambhavi_123</a>
                 </div>
               </div>
             </div>
             
             <div className="mt-6 pt-4 border-t border-gray-200 text-center">
-              <p className="text-xs text-gray-500">Looking forward to connecting with you! ✨</p>
+              <p className={`text-xs ${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'}`}>Looking forward to connecting with you! ✨</p>
             </div>
           </div>
         </div>
@@ -310,12 +310,12 @@ export default function Home() {
       {/* Navigation Menu */}
       {showNavMenu && (
         <div className="fixed inset-0 bg-black/60 z-40" onClick={() => setShowNavMenu(false)}>
-          <div className="absolute top-20 left-8 bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-6 min-w-[280px] animate-scaleIn border border-gray-200" onClick={e => e.stopPropagation()}>
+          <div className={`absolute top-20 left-8 ${theme === 'dark' ? 'bg-gray-800/95' : 'bg-white/95'} backdrop-blur-md rounded-2xl shadow-2xl p-6 min-w-[280px] animate-scaleIn border border-gray-200`} onClick={e => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-gray-800">Quick Navigation</h3>
+              <h3 className={`text-lg font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>Quick Navigation</h3>
               <button 
                 onClick={() => setShowNavMenu(false)}
-                className="text-gray-500 hover:text-gray-700 text-xl"
+                className={`text-xl ${theme === 'dark' ? 'text-gray-300 hover:text-white' : 'text-gray-500 hover:text-gray-700'}`}
               >
                 ×
               </button>
@@ -328,7 +328,7 @@ export default function Home() {
                   className="flex items-center gap-3 p-3 rounded-xl hover:bg-accent/10 transition-all duration-300 text-left group"
                 >
                   <span className="text-xl">{section.icon}</span>
-                  <span className="font-medium text-gray-700 group-hover:text-accent">{section.label}</span>
+                  <span className={`font-medium ${theme === 'dark' ? 'text-gray-300 group-hover:text-accent' : 'text-gray-700 group-hover:text-accent'}`}>{section.label}</span>
                 </button>
               ))}
             </div>
@@ -571,12 +571,12 @@ export default function Home() {
             data-aos-delay="100"
           >
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300">
+              <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300">
                 <Image src="/adobe-logo.png" alt="Adobe Logo" width={48} height={48} />
               </div>
               <div className="font-bold text-xl hover:text-accent-light transition-colors duration-300 group-hover:scale-105">Adobe Student Ambassador</div>
             </div>
-            <div className="text-base mb-3 text-gray-800">Representing Adobe&apos;s creative tools and technologies to the student community</div>
+            <div className={`text-base mb-3 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-800'}`}>Representing Adobe&apos;s creative tools and technologies to the student community</div>
             <ul className="list-disc pl-4 text-base space-y-2">
               <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Promoting Adobe&apos;s creative software solutions</li>
               <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Organizing workshops and training sessions</li>
@@ -593,12 +593,12 @@ export default function Home() {
             data-aos-delay="200"
           >
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300">
+              <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300">
                 <Image src="/fetch-ai-logo.svg" alt="Fetch AI Logo" width={48} height={48} />
               </div>
               <div className="font-bold text-xl hover:text-accent-light transition-colors duration-300 group-hover:scale-105">Fetch AI Innovation Ambassador</div>
             </div>
-            <div className="text-base mb-3 text-gray-800">Leading innovation initiatives and AI adoption in the academic community</div>
+            <div className={`text-base mb-3 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-800'}`}>Leading innovation initiatives and AI adoption in the academic community</div>
             <ul className="list-disc pl-4 text-base space-y-2">
               <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Advocating for AI innovation and adoption</li>
               <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Facilitating AI workshops and demonstrations</li>
@@ -644,10 +644,10 @@ export default function Home() {
               data-aos-delay={index * 300}
             >
               <div className="font-extrabold text-xl text-accent drop-shadow-sm hover:text-accent-light transition-colors duration-300 group-hover:scale-105">{project.title}</div>
-              <div className="text-base font-semibold mb-2 text-gray-800 drop-shadow-sm hover:text-accent-light transition-colors duration-300">{project.type}</div>
+              <div className={`text-base font-semibold mb-2 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-800'} drop-shadow-sm hover:text-accent-light transition-colors duration-300`}>{project.type}</div>
               <ul className="list-disc pl-4 text-base space-y-1">
                 {project.points.map((point, pointIndex) => (
-                  <li key={pointIndex} className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform text-gray-900/90 drop-shadow-sm">{point}</li>
+                  <li key={pointIndex} className={`hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform drop-shadow-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-900/90'}`}>{point}</li>
                 ))}
               </ul>
             </div>
@@ -703,7 +703,7 @@ export default function Home() {
             theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
           }`} data-aos="zoom-in" data-aos-delay="100">
             <div className="font-bold text-lg mb-1">Advanced Google Analytics</div>
-            <div className="text-base mb-1 text-gray-800">Google Analytics Academy</div>
+            <div className={`text-base mb-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-800'}`}>Google Analytics Academy</div>
             <div className="text-sm mb-1">Issued Feb 2023 · Expires Apr 2026</div>
           </div>
           {/* Managing Project Risks and Changes */}
@@ -711,7 +711,7 @@ export default function Home() {
             theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
           }`} data-aos="zoom-in" data-aos-delay="200">
             <div className="font-bold text-lg mb-1">Managing Project Risks and Changes</div>
-            <div className="text-base mb-1 text-gray-800">Coursera</div>
+            <div className={`text-base mb-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-800'}`}>Coursera</div>
             <div className="text-sm mb-1">Issued Jul 2020</div>
           </div>
           {/* SQL for Data Science */}
@@ -719,7 +719,7 @@ export default function Home() {
             theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
           }`} data-aos="zoom-in" data-aos-delay="300">
             <div className="font-bold text-lg mb-1">SQL for Data Science</div>
-            <div className="text-base mb-1 text-gray-800">Coursera</div>
+            <div className={`text-base mb-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-800'}`}>Coursera</div>
             <div className="text-sm mb-1">Issued Jul 2020</div>
           </div>
           {/* Google Analytics for Beginners */}
@@ -727,7 +727,7 @@ export default function Home() {
             theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
           }`} data-aos="zoom-in" data-aos-delay="400">
             <div className="font-bold text-lg mb-1">Google Analytics for Beginners</div>
-            <div className="text-base mb-1 text-gray-800">Google Analytics Academy</div>
+            <div className={`text-base mb-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-800'}`}>Google Analytics Academy</div>
             <div className="text-sm mb-1">Issued Jun 2020</div>
           </div>
           {/* Initiating and Planning Projects */}
@@ -735,7 +735,7 @@ export default function Home() {
             theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
           }`} data-aos="zoom-in" data-aos-delay="500">
             <div className="font-bold text-lg mb-1">Initiating and Planning Projects</div>
-            <div className="text-base mb-1 text-gray-800">Coursera</div>
+            <div className={`text-base mb-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-800'}`}>Coursera</div>
             <div className="text-sm mb-1">Issued Jun 2020</div>
             <div className="text-xs mb-1 text-gray-400">Credential ID VVKFP6SFDELC</div>
           </div>
@@ -744,20 +744,24 @@ export default function Home() {
             theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
           }`} data-aos="zoom-in" data-aos-delay="600">
             <div className="font-bold text-lg mb-1">Introduction to Google Docs</div>
-            <div className="text-base mb-1 text-gray-800">Coursera</div>
+            <div className={`text-base mb-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-800'}`}>Coursera</div>
             <div className="text-sm mb-1">Issued Jun 2020</div>
             <div className="text-xs mb-1 text-gray-400">Credential ID KMDHGHLT5DU8</div>
           </div>
           {/* The Fundamentals of Digital Marketing */}
-          <div className="bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-300 hover:scale-105 hover:bg-white/95 hover-lift" data-aos="zoom-in" data-aos-delay="700">
+          <div className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-300 hover:scale-105 hover-lift ${
+            theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
+          }`} data-aos="zoom-in" data-aos-delay="700">
             <div className="font-bold text-lg mb-1">The Fundamentals of Digital Marketing</div>
-            <div className="text-base mb-1 text-gray-800">Google Digital Garage</div>
+            <div className={`text-base mb-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-800'}`}>Google Digital Garage</div>
             <div className="text-sm mb-1">Issued Jun 2020</div>
           </div>
           {/* AI for Everyone */}
-          <div className="bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-300 hover:scale-105 hover:bg-white/95 hover-lift" data-aos="zoom-in" data-aos-delay="800">
+          <div className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-300 hover:scale-105 hover-lift ${
+            theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
+          }`} data-aos="zoom-in" data-aos-delay="800">
             <div className="font-bold text-lg mb-1">AI for Everyone</div>
-            <div className="text-base mb-1 text-gray-800">Coursera</div>
+            <div className={`text-base mb-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-800'}`}>Coursera</div>
             <div className="text-sm mb-1">Issued Mar 2020</div>
           </div>
         </div>
@@ -861,7 +865,7 @@ export default function Home() {
                   <Image src="/coffer-chics-8.png" alt="Coffer Chics Jewellery Post 8" width={200} height={200} className="w-full h-full object-cover" />
                 </div>
               </div>
-              <p className="text-sm text-center mt-4 text-gray-800">Click <a href="https://www.instagram.com/coffer_chics" target="_blank" rel="noopener noreferrer" className="text-accent underline hover:no-underline">here</a> to view more posts</p>
+              <p className={`text-sm text-center mt-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-800'}`}>Click <a href="https://www.instagram.com/coffer_chics" target="_blank" rel="noopener noreferrer" className="text-accent underline hover:no-underline">here</a> to view more posts</p>
             </div>
           </div>
         </div>
@@ -927,7 +931,7 @@ export default function Home() {
                 <Image src="/event-6.png" alt="Blindfolded Conversations Event 6" width={200} height={200} className="w-full h-full object-cover" />
               </div>
             </div>
-            <p className="text-sm text-center mt-4 text-gray-800">Event photos showcasing the successful execution of Blindfolded Conversations</p>
+            <p className={`text-sm text-center mt-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-800'}`}>Event photos showcasing the successful execution of Blindfolded Conversations</p>
           </div>
         </div>
       </section>
@@ -948,7 +952,7 @@ export default function Home() {
             <span className="text-xl">📥</span>
             Download Resume (PDF)
           </a>
-          <p className="text-sm text-gray-800 mt-4">Click the button above to download my resume</p>
+          <p className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-800'} mt-4`}>Click the button above to download my resume</p>
         </div>
       </section>
     </div>
