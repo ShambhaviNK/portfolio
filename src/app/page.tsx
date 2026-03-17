@@ -647,15 +647,14 @@ export default function Home() {
           <div className="w-full flex-shrink-0 h-full overflow-y-auto">
       <div className="w-full flex flex-col items-center p-4 sm:p-10">
       {/* Technical Skills */}
-      <section id="skills" className="snap-section min-h-screen relative w-full max-w-5xl mb-12 z-10 flex flex-col justify-center py-16" data-aos="fade-up">
+      <section id="skills" className="snap-section min-h-screen relative w-full max-w-5xl mb-12 z-10 flex flex-col justify-center py-16">
         <div className="mb-6">
           <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100">Technical Skills</h2>
         </div>
-        <div className={`rounded-2xl p-6 sm:p-8 border shadow-lg transition-all duration-300
-          bg-stone-800/80 border-stone-600`} data-aos="zoom-in" data-aos-delay="200">
+        <div className="rounded-2xl p-6 sm:p-8 border shadow-lg bg-stone-800/80 border-stone-600">
           {/* Skill Categories as Tabs */}
-          <div className="flex flex-wrap gap-2 mb-6" data-aos="fade-up" data-aos-delay="300">
-            {SKILL_TABS.map((tab, index) => (
+          <div className="flex flex-wrap gap-2 mb-6">
+            {SKILL_TABS.map((tab) => (
               <button
                 key={tab}
                 className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300
@@ -663,21 +662,15 @@ export default function Home() {
                     ? 'bg-accent text-white shadow-md'
                     : 'bg-stone-700 text-stone-300 hover:bg-stone-600'}`}
                 onClick={() => setActiveTab(tab)}
-                data-aos="fade-up"
-                data-aos-delay={index * 50}
               >
                 {tab}
               </button>
             ))}
           </div>
           {/* Skills Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4" data-aos="fade-up" data-aos-delay="400">
-            {SKILLS.filter(skill => activeTab === "All" || skill.category === activeTab).map((skill, index) => (
-              <div 
-                key={skill.name} 
-                data-aos="zoom-in" 
-                data-aos-delay={index * 50}
-              >
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+            {SKILLS.filter(skill => activeTab === "All" || skill.category === activeTab).map((skill) => (
+              <div key={skill.name}>
                 <SkillCard icon={skill.icon} name={skill.name} category={skill.category} />
               </div>
             ))}
