@@ -78,6 +78,19 @@ export default function Home() {
     });
   }, []);
 
+  // Responsive: detect mobile vs desktop (for slider vs single-page)
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const updateIsMobile = () => {
+      if (typeof window !== "undefined") {
+        setIsMobile(window.innerWidth < 1024); // match Tailwind lg breakpoint
+      }
+    };
+    updateIsMobile();
+    window.addEventListener("resize", updateIsMobile);
+    return () => window.removeEventListener("resize", updateIsMobile);
+  }, []);
+
   // Scroll to top on page refresh
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -98,6 +111,7 @@ export default function Home() {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [selectedExperienceIndex, setSelectedExperienceIndex] = useState(0);
+  const [expandedExperienceIndex, setExpandedExperienceIndex] = useState<number | null>(0);
 
   // Derive progress and active section from current card index
   useEffect(() => {
@@ -263,10 +277,10 @@ export default function Home() {
           </div>
         )}
 
-        <div className="h-screen overflow-hidden w-full">
+        <div className={isMobile ? "w-full" : "h-screen overflow-hidden w-full"}>
         <div
-          className="flex h-full transition-transform duration-500 ease-out"
-          style={{ transform: `translateX(-${currentSectionIndex * 100}%)` }}
+          className={`flex h-full transition-transform duration-500 ease-out ${isMobile ? "flex-col" : ""}`}
+          style={isMobile ? undefined : { transform: `translateX(-${currentSectionIndex * 100}%)` }}
         >
           {/* Slide 0: Hero */}
           <div className="w-full flex-shrink-0 h-full overflow-hidden">
@@ -397,22 +411,22 @@ export default function Home() {
           <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100">About</h2>
           <p className={`mt-1 text-sm ${"text-stone-400"}`}>In three notes</p>
         </div>
-        <div className="relative min-h-[320px] sm:min-h-[360px] flex items-center justify-center">
-          {/* Back card – left, slight tilt */}
+        <div className="relative flex flex-col gap-4 sm:min-h-[360px] sm:flex sm:items-center sm:justify-center">
+          {/* Back card – left; stacked on mobile, tilted on desktop */}
           <div
-            className={`absolute left-0 sm:left-4 top-4 w-[92%] sm:w-80 max-w-sm rounded-xl p-5 shadow-lg border transition-all duration-300 hover:z-20 hover:scale-[1.02]
+            className={`relative sm:absolute w-full sm:w-80 max-w-sm rounded-xl p-5 shadow-lg border transition-all duration-300 hover:z-20 hover:scale-[1.02]
               ${"bg-amber-950/40 border-amber-800/50"}
-              rotate-[-3deg] origin-bottom-left`}
+              sm:rotate-[-3deg] sm:origin-bottom-left sm:left-4 sm:top-4 mb-4 sm:mb-0`}
           >
             <span className="text-2xl opacity-70">📐</span>
             <p className="font-display font-bold text-stone-800 dark:text-stone-200 mt-2 text-lg">Built</p>
             <p className="text-sm text-stone-600 dark:text-stone-400 mt-1">4+ years in software engineering & product delivery.</p>
           </div>
-          {/* Middle card – right, slight tilt */}
+          {/* Middle card – right; stacked on mobile, tilted on desktop */}
           <div
-            className={`absolute right-0 sm:right-4 top-8 w-[92%] sm:w-80 max-w-sm rounded-xl p-5 shadow-lg border transition-all duration-300 hover:z-20 hover:scale-[1.02]
+            className={`relative sm:absolute w-full sm:w-80 max-w-sm rounded-xl p-5 shadow-lg border transition-all duration-300 hover:z-20 hover:scale-[1.02]
               ${"bg-teal-950/40 border-teal-800/50"}
-              rotate-[2deg] origin-bottom-right`}
+              sm:rotate-[2deg] sm:origin-bottom-right sm:right-4 sm:top-8 mb-4 sm:mb-0`}
           >
             <span className="text-2xl opacity-70">🎓</span>
             <p className="font-display font-bold text-stone-800 dark:text-stone-200 mt-2 text-lg">Learning</p>
@@ -422,7 +436,7 @@ export default function Home() {
           <div
             className={`relative z-10 w-full max-w-lg rounded-2xl p-6 sm:p-8 shadow-xl border transition-all duration-300
               ${"bg-stone-800/95 border-stone-600"}
-              rotate-0 mt-24 sm:mt-28`}
+              rotate-0 mt-0 sm:mt-28`}
           >
             <p className="text-base sm:text-lg leading-relaxed text-stone-700 dark:text-stone-300">
               Aspiring <span className="font-semibold text-stone-900 dark:text-stone-100">Product/Project Manager</span> bridging technical depth with business strategy. Building toward scalable, impactful solutions.
@@ -439,61 +453,120 @@ export default function Home() {
       <section id="experience" className="snap-section min-h-screen relative w-full max-w-5xl mb-12 z-10 flex flex-col justify-center py-16" data-aos="fade-up">
         <div className="mb-6">
           <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100">Work Experience</h2>
-          <p className={`mt-1 text-sm ${"text-stone-400"}`}>Select a role to view details</p>
+          <p className="mt-1 text-sm text-stone-400">{isMobile ? "Tap a role to expand" : "Select a role to view details"}</p>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,260px)_1fr] gap-6 lg:gap-8">
-          {/* Role list – compact */}
-          <div className="flex lg:flex-col gap-2 overflow-x-auto pb-2 lg:pb-0 lg:max-h-[420px] lg:overflow-y-auto">
+        {isMobile ? (
+          <div className="space-y-3">
             {EXPERIENCE_JOBS.map((job, index) => {
-              const isSelected = selectedExperienceIndex === index;
+              const isOpen = expandedExperienceIndex === index;
+              const shortTitle = job.title.replace(/^[^\s]+\s/, "").trim() || job.title;
               return (
-                <button
+                <div
                   key={index}
-                  type="button"
-                  onClick={() => setSelectedExperienceIndex(index)}
-                  className={`flex-shrink-0 lg:flex-shrink text-left rounded-xl px-4 py-3 transition-all duration-200 border-l-4 lg:border-l-4 min-w-[200px] lg:min-w-0
-                    ${isSelected
-                      ? "border-accent bg-accent/10 " + ("text-white")
-                      : "border-transparent " + ("hover:bg-stone-700/50 text-stone-400")}`}
+                  className={`rounded-2xl border shadow-md overflow-hidden ${isOpen ? "border-accent/60" : "border-stone-600"} bg-stone-800/90`}
                 >
-                  <span className="block font-semibold text-sm truncate">{job.title.replace(/^[^\s]+\s/, "").trim() || job.title}</span>
-                  <span className="block text-xs opacity-80 mt-0.5 truncate">{job.company}</span>
-                </button>
+                  <button
+                    type="button"
+                    onClick={() => setExpandedExperienceIndex((cur) => (cur === index ? null : index))}
+                    className="w-full flex items-start justify-between gap-4 px-5 py-4 text-left"
+                    aria-expanded={isOpen}
+                  >
+                    <div>
+                      <div className="font-semibold text-base text-stone-100 leading-snug">{shortTitle}</div>
+                      <div className="mt-1 text-xs text-stone-400 flex flex-wrap gap-x-3 gap-y-1">
+                        <span className="text-accent font-medium">{job.company}</span>
+                        <span className="italic text-stone-500">{job.dates}</span>
+                      </div>
+                    </div>
+                    <svg
+                      className={`w-5 h-5 text-stone-400 transition-transform duration-200 mt-0.5 ${isOpen ? "rotate-180" : ""}`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  {isOpen && (
+                    <div className="px-5 pb-5">
+                      <ul className="mt-1 space-y-2 text-sm text-stone-300">
+                        {job.points.map((p, i) => (
+                          <li key={i} className="flex gap-2 leading-relaxed">
+                            <span className="text-accent mt-0.5">•</span>
+                            <span>{p}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      {job.link && (
+                        <div className="mt-4">
+                          <a
+                            href={job.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 bg-accent text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-accent-light transition-all duration-300"
+                          >
+                            <span>🔗</span> View Project
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
               );
             })}
           </div>
-          {/* Detail panel – one role at a time */}
-          <div
-            className={`rounded-2xl p-6 sm:p-8 border shadow-lg flex flex-col items-start transition-all duration-300 min-h-[320px]
-              ${"bg-stone-800/90 border-stone-600"}`}
-          >
-            {(() => {
-              const job = EXPERIENCE_JOBS[selectedExperienceIndex];
-              if (!job) return null;
-              return (
-                <>
-                  <div className="font-bold text-lg sm:text-xl text-stone-900 dark:text-stone-100">{job.title}</div>
-                  <div className="text-sm flex flex-wrap gap-x-4 gap-y-1 mt-2 text-stone-600 dark:text-stone-400">
-                    <span>{job.company}</span>
-                    <span className="italic">{job.dates}</span>
-                  </div>
-                  <ul className="list-disc pl-5 space-y-2 mt-4 text-sm text-stone-700 dark:text-stone-300">
-                    {job.points.map((p, i) => (
-                      <li key={i} className="leading-relaxed">{p}</li>
-                    ))}
-                  </ul>
-                  {job.link && (
-                    <div className="mt-6">
-                      <a href={job.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-accent text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-accent-light transition-all duration-300">
-                        <span>🔗</span> View Project
-                      </a>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,260px)_1fr] gap-6 lg:gap-8">
+            {/* Role list – compact */}
+            <div className="flex lg:flex-col gap-2 overflow-x-auto pb-2 lg:pb-0 lg:max-h-[420px] lg:overflow-y-auto">
+              {EXPERIENCE_JOBS.map((job, index) => {
+                const isSelected = selectedExperienceIndex === index;
+                return (
+                  <button
+                    key={index}
+                    type="button"
+                    onClick={() => setSelectedExperienceIndex(index)}
+                    className={`flex-shrink-0 lg:flex-shrink text-left rounded-xl px-4 py-3 transition-all duration-200 border-l-4 lg:border-l-4 min-w-[200px] lg:min-w-0
+                      ${isSelected
+                        ? "border-accent bg-accent/10 text-white"
+                        : "border-transparent hover:bg-stone-700/50 text-stone-400"}`}
+                  >
+                    <span className="block font-semibold text-sm truncate">{job.title.replace(/^[^\s]+\s/, "").trim() || job.title}</span>
+                    <span className="block text-xs opacity-80 mt-0.5 truncate">{job.company}</span>
+                  </button>
+                );
+              })}
+            </div>
+            {/* Detail panel – one role at a time */}
+            <div className="rounded-2xl p-6 sm:p-8 border shadow-lg flex flex-col items-start transition-all duration-300 min-h-[320px] bg-stone-800/90 border-stone-600">
+              {(() => {
+                const job = EXPERIENCE_JOBS[selectedExperienceIndex];
+                if (!job) return null;
+                return (
+                  <>
+                    <div className="font-bold text-lg sm:text-xl text-stone-100">{job.title}</div>
+                    <div className="text-sm flex flex-wrap gap-x-4 gap-y-1 mt-2 text-stone-400">
+                      <span>{job.company}</span>
+                      <span className="italic text-stone-500">{job.dates}</span>
                     </div>
-                  )}
-                </>
-              );
-            })()}
+                    <ul className="list-disc pl-5 space-y-2 mt-4 text-sm text-stone-300">
+                      {job.points.map((p, i) => (
+                        <li key={i} className="leading-relaxed">{p}</li>
+                      ))}
+                    </ul>
+                    {job.link && (
+                      <div className="mt-6">
+                        <a href={job.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-accent text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-accent-light transition-all duration-300">
+                          <span>🔗</span> View Project
+                        </a>
+                      </div>
+                    )}
+                  </>
+                );
+              })()}
+            </div>
           </div>
-        </div>
+        )}
       </section>
           </div>
         </div>
