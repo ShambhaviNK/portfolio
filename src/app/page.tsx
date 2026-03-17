@@ -136,7 +136,25 @@ export default function Home() {
   ];
 
   const scrollToSection = (sectionId: string) => {
-    if (sectionId === 'top') {
+    // On mobile, sections are stacked vertically – use native scrolling
+    if (isMobile) {
+      if (sectionId === "top") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        const el = document.getElementById(sectionId);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }
+      // Keep activeSection in sync for highlighting
+      const idx = CARD_IDS.indexOf(sectionId as typeof CARD_IDS[number]);
+      if (idx >= 0) setCurrentSectionIndex(idx);
+      setShowNavMenu(false);
+      return;
+    }
+
+    // Desktop: use card index to drive the horizontal slider
+    if (sectionId === "top") {
       setCurrentSectionIndex(0);
       setShowNavMenu(false);
       return;
