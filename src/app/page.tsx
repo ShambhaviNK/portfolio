@@ -1,8 +1,6 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { FaSun, FaMoon } from "react-icons/fa";
-import { MdBlurOn } from "react-icons/md";
 // @ts-expect-error: No type definitions for 'aos'
 import AOS from "aos";
 
@@ -57,19 +55,19 @@ const SKILLS = [
 
 const SKILL_TABS = ["All", "Frontend", "Backend", "Cloud", "Tools", "Languages", "Specializations"];
 
-export default function Home() {
-  // Theme state: 'light', 'dark', 'glass'
-  const [theme, setTheme] = useState('glass');
-  useEffect(() => {
-    const saved = typeof window !== 'undefined' ? localStorage.getItem('theme') : null;
-    if (saved) setTheme(saved);
-  }, []);
-  useEffect(() => {
-    if (typeof window !== 'undefined') localStorage.setItem('theme', theme);
-  }, [theme]);
-  const nextTheme = theme === 'glass' ? 'light' : theme === 'light' ? 'dark' : 'glass';
-  const themeIcon = theme === 'glass' ? <MdBlurOn size={22} /> : theme === 'light' ? <FaSun size={22} /> : <FaMoon size={22} />;
+const EXPERIENCE_JOBS = [
+  { title: "⚡ Junior Software Engineer", company: "Fetch.ai, San Jose, USA", dates: "Present", points: ["Shipped multi-agent workflows on asi.one, increasing task completion efficiency for coordination-heavy use cases by 30%.", "Translated top user pain points into agent capabilities and interaction protocols, iterating with product and UX to drive a 25% improvement in feature adoption.", "Prototyped and instrumented end-to-end agent journeys, enabling data-driven go/no-go decisions and reducing time-to-validate multi-agent concepts by 40%."], link: undefined as string | undefined },
+  { title: "🎮 Project Manager (Game Development) Intern", company: "Resilience Inc. (Remote), USA", dates: "(Jun 2025 – Oct 2025)", points: ["Led cross-functional teams to relaunch digital education tools, expanding user adoption by 35%", "Managed project timelines and facilitated weekly progress reviews for strategic alignment", "Built partnerships with 50+ schools to deploy gamified social-emotional learning content"], link: undefined as string | undefined },
+  { title: "🤖 AI/Software Intern", company: "Brain and Body Autism Center, Mountain View, CA, USA", dates: "(Jun 2025 - Dec 2025)", points: ["Developed iOS-based AI-powered AAC app for non-verbal autistic children using on-device LLMs", "Enhanced communication personalization by 40% through contextual AI implementation", "Collaborated with clinical experts to improve UI/UX, boosting therapy usability by 60%"], link: "https://www.tejutalks.com" },
+  { title: "🧑‍💻 Software Product and Platform Engineering Analyst", company: "Accenture Pvt Ltd, India", dates: "(May 2022 – Jun 2024)", points: ["Led team of 4 developers to deliver 10+ responsive web pages for Accenture AWS Business Group", "Resolved 100+ defects for Singapore Ministry of Education, enhancing efficiency by 40%", "Managed 15+ API integrations and maintained 100% code consistency across projects"], link: undefined as string | undefined },
+  { title: "🧑‍💼 Application Development Associate", company: "Accenture Pvt Ltd, India", dates: "(Dec 2020 – Apr 2022)", points: ["Built reusable UI component library with 20+ Angular components", "Reduced page load time by 46% and increased user engagement by 33%", "Achieved 90% code coverage through comprehensive unit testing implementation"], link: undefined as string | undefined },
+  { title: "🧑‍🎓 Salesforce Intern", company: "Tata Consultancy Services, India", dates: "(Jan 2020 – Jun 2020)", points: ["Gained hands-on experience with Salesforce platform and Trailhead learning paths", "Developed CRM customization and automation skills for workflow optimization", "Contributed to internal project efficiency improvements using Salesforce tools"], link: undefined as string | undefined },
+  { title: "🟠 Intern", company: "Orange Tales, Nagpur, India", dates: "(May 2019 – Apr 2020)", points: ["Executed local brand marketing campaigns, boosting event participation by 40%", "Managed social media content creation and audience outreach strategies", "Analyzed campaign metrics using Excel to drive data-informed marketing decisions"], link: undefined as string | undefined },
+  { title: "🚶 Global Volunteer", company: "AIESEC, Nagpur, India", dates: "(Jun 2017 – Feb 2019)", points: ["Led intercultural marketing initiatives with international teams", "Increased volunteer exchange program participation by 25%", "Utilized Excel for impact metrics tracking and logistical planning"], link: undefined as string | undefined },
+  { title: "🟦 Intern", company: "eParivahan, Mumbai, India", dates: "(Dec 2018 – Jan 2019)", points: ["Streamlined data entry and reporting processes using Microsoft Excel", "Assisted in digitization efforts for legacy transport system records", "Created summary dashboards to improve internal data accessibility"], link: undefined as string | undefined },
+];
 
+export default function Home() {
   useEffect(() => {
     AOS.init({ 
       once: true, 
@@ -92,29 +90,25 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState("All");
   
   // Add state for scroll to top button
-  const [showScrollTop, setShowScrollTop] = useState(false);
   const [showNavMenu, setShowNavMenu] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>("");
 
-  // Handle scroll events
+  // Card-based navigation: one section per "card", arrow moves to next/prev
+  const CARD_IDS = ['top', 'about', 'experience', 'education', 'ambassador', 'projects', 'skills', 'certifications', 'achievements', 'entrepreneurship', 'events', 'resume'] as const;
+  const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [selectedExperienceIndex, setSelectedExperienceIndex] = useState(0);
+
+  // Derive progress and active section from current card index
   useEffect(() => {
-    const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 300);
-    };
+    const total = CARD_IDS.length;
+    setScrollProgress(total > 1 ? currentSectionIndex / (total - 1) : 0);
+    setActiveSection(CARD_IDS[currentSectionIndex]);
+  }, [currentSectionIndex]);
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Scroll to top function
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  };
-
-  // Navigation sections
   const navSections = [
+    { id: 'top', label: 'Home', icon: '🏠' },
+    { id: 'about', label: 'About', icon: '🎯' },
     { id: 'experience', label: 'Experience', icon: '💼' },
     { id: 'education', label: 'Education', icon: '🎓' },
     { id: 'ambassador', label: 'Ambassador', icon: '🌟' },
@@ -127,179 +121,169 @@ export default function Home() {
     { id: 'resume', label: 'Resume', icon: '📄' }
   ];
 
-  // Scroll to section function
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    if (sectionId === 'top') {
+      setCurrentSectionIndex(0);
+      setShowNavMenu(false);
+      return;
     }
+    const i = CARD_IDS.indexOf(sectionId as typeof CARD_IDS[number]);
+    if (i >= 0) setCurrentSectionIndex(i);
     setShowNavMenu(false);
   };
+
+  const goToNextSection = () => {
+    setCurrentSectionIndex(i => Math.min(CARD_IDS.length - 1, i + 1));
+  };
+  const goToPrevSection = () => {
+    setCurrentSectionIndex(i => Math.max(0, i - 1));
+  };
+
+  const scrollToTop = () => {
+    setCurrentSectionIndex(0);
+  };
+
+  // Show "scroll to top" when not on first card
+  const showScrollTop = currentSectionIndex > 0;
 
   return (
     <>
       <style jsx global>{`
-        html {
-          scroll-behavior: smooth;
-        }
-        body {
-          overflow-x: hidden;
-        }
-        * {
-          scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
+        body { overflow-x: hidden; }
       `}</style>
-      <div className={`relative min-h-screen p-4 sm:p-10 flex flex-col items-center font-sans overflow-x-hidden scroll-smooth 
-        ${theme === 'glass' ? 'bg-gradient-to-br from-pink-200 via-yellow-100 to-blue-200 text-black' : ''}
-        ${theme === 'light' ? 'bg-white text-black' : ''}
-        ${theme === 'dark' ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-white' : ''}
-      `}>
-      {/* Animated SVG background pattern */}
-      <svg className="absolute top-0 left-0 w-full h-64 opacity-10 z-0" style={{animation: 'pulse 4s ease-in-out infinite'}} viewBox="0 0 1440 320">
-        <path fill="#800000" fillOpacity="1" d="M0,160L60,170.7C120,181,240,203,360,197.3C480,192,600,160,720,133.3C840,107,960,85,1080,101.3C1200,117,1320,171,1380,197.3L1440,224L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path>
-      </svg>
-
-      {/* Animated Background Elements */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 will-change-transform">
-        {/* Floating Particles */}
-        <div className="absolute top-20 left-10 w-2 h-2 bg-accent rounded-full animate-float opacity-30"></div>
-        <div className="absolute top-40 right-20 w-1 h-1 bg-accent-light rounded-full animate-float" style={{animationDelay: '1s', animationDuration: '4s'}}></div>
-        <div className="absolute top-60 left-1/4 w-1.5 h-1.5 bg-accent rounded-full animate-float opacity-40" style={{animationDelay: '2s', animationDuration: '5s'}}></div>
-        <div className="absolute top-80 right-1/3 w-1 h-1 bg-accent-light rounded-full animate-float" style={{animationDelay: '0.5s', animationDuration: '3.5s'}}></div>
-        <div className="absolute top-96 left-1/2 w-2 h-2 bg-accent rounded-full animate-float opacity-30" style={{animationDelay: '1.5s', animationDuration: '4.5s'}}></div>
-        
-        {/* More particles in different areas */}
-        <div className="absolute top-1/3 left-16 w-1 h-1 bg-accent-light rounded-full animate-float" style={{animationDelay: '0.8s', animationDuration: '3s'}}></div>
-        <div className="absolute top-1/2 right-12 w-1.5 h-1.5 bg-accent rounded-full animate-float opacity-40" style={{animationDelay: '2.2s', animationDuration: '4s'}}></div>
-        <div className="absolute top-2/3 left-1/3 w-1 h-1 bg-accent-light rounded-full animate-float" style={{animationDelay: '1.2s', animationDuration: '3.8s'}}></div>
-        <div className="absolute top-3/4 right-1/4 w-2 h-2 bg-accent rounded-full animate-float opacity-30" style={{animationDelay: '0.3s', animationDuration: '5.2s'}}></div>
-        
-        {/* Bottom area particles */}
-        <div className="absolute bottom-40 left-20 w-1 h-1 bg-accent-light rounded-full animate-float" style={{animationDelay: '1.8s', animationDuration: '4.2s'}}></div>
-        <div className="absolute bottom-60 right-16 w-1.5 h-1.5 bg-accent rounded-full animate-float opacity-40" style={{animationDelay: '0.7s', animationDuration: '3.3s'}}></div>
-        <div className="absolute bottom-80 left-1/3 w-1 h-1 bg-accent-light rounded-full animate-float" style={{animationDelay: '2.5s', animationDuration: '4.8s'}}></div>
-
-        {/* Animated Gradient Orbs */}
-        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-gradient-to-r from-accent/20 to-accent-light/20 rounded-full blur-xl animate-pulse-slow"></div>
-        <div className="absolute top-3/4 right-1/4 w-24 h-24 bg-gradient-to-r from-accent-light/20 to-accent/20 rounded-full blur-xl animate-pulse-slow" style={{animationDelay: '1s'}}></div>
-        <div className="absolute bottom-1/4 left-1/2 w-20 h-20 bg-gradient-to-r from-accent/15 to-accent-light/15 rounded-full blur-xl animate-pulse-slow" style={{animationDelay: '2s'}}></div>
-
-        {/* Moving Lines */}
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent animate-shimmer"></div>
-        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent-light/30 to-transparent animate-shimmer" style={{animationDelay: '1s'}}></div>
-        
-        {/* Diagonal Lines */}
-        <div className="absolute top-1/4 left-0 w-32 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent transform rotate-45 animate-shimmer" style={{animationDelay: '0.5s'}}></div>
-        <div className="absolute top-3/4 right-0 w-32 h-px bg-gradient-to-r from-transparent via-accent-light/20 to-transparent transform -rotate-45 animate-shimmer" style={{animationDelay: '1.5s'}}></div>
-
-        {/* Animated Grid Pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="w-full h-full" style={{
-            backgroundImage: `
-              linear-gradient(rgba(128, 0, 0, 0.1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(128, 0, 0, 0.1) 1px, transparent 1px)
-            `,
-            backgroundSize: '50px 50px',
-            animation: 'shimmer 8s linear infinite'
-          }}></div>
+      <div className="relative min-h-screen font-sans bg-gradient-to-b from-stone-950 via-stone-900 to-stone-950 text-stone-100">
+        {/* Scroll progress bar – top */}
+        <div className="fixed top-0 left-0 right-0 h-1 bg-stone-200/50 dark:bg-stone-700/50 z-[60]">
+          <div className="h-full bg-accent transition-all duration-300 ease-out" style={{ width: `${scrollProgress * 100}%` }} />
         </div>
 
-        {/* Glowing Spots */}
-        <div className="absolute top-1/3 right-1/3 w-4 h-4 bg-accent rounded-full blur-sm animate-glow opacity-40"></div>
-        <div className="absolute bottom-1/3 left-1/3 w-3 h-3 bg-accent-light rounded-full blur-sm animate-glow opacity-50" style={{animationDelay: '1s'}}></div>
-        <div className="absolute top-2/3 left-1/4 w-2 h-2 bg-accent rounded-full blur-sm animate-glow opacity-60" style={{animationDelay: '2s'}}></div>
-      </div>
+        {/* Next / Prev section buttons + section indicator */}
+        <div className="fixed right-4 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col items-center gap-3">
+          <span className="text-xs font-medium text-stone-500">
+            {currentSectionIndex + 1} / {CARD_IDS.length}
+          </span>
+          <button onClick={goToPrevSection} aria-label="Previous section" className="p-2 rounded-full border-2 border-stone-600 hover:border-accent transition-all hover:scale-110">
+            <svg className="w-5 h-5 rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
+          </button>
+          <button onClick={goToNextSection} aria-label="Next section" className="p-2 rounded-full border-2 border-stone-600 hover:border-accent transition-all hover:scale-110">
+            <svg className="w-5 h-5 -rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
+          </button>
+        </div>
 
-      {/* Floating Contact Button */}
-      <button
-        className="fixed bottom-8 right-8 z-50 bg-accent text-white rounded-full shadow-lg p-4 transition-all duration-300 flex items-center gap-2 hover:scale-105 hover:shadow-xl"
-        onClick={() => setShowContact(true)}
-        aria-label="Contact Me"
-      >
-        📞 Contact Me
-      </button>
-      {showContact && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 animate-fadeIn overflow-y-auto p-4" onClick={() => setShowContact(false)}>
-                      <div className={`bg-gradient-to-br from-pink-100 via-yellow-50 to-blue-100 ${theme === 'dark' ? 'from-gray-800 via-gray-700 to-gray-600' : ''} ${theme === 'dark' ? 'text-white' : 'text-black'} rounded-2xl p-6 shadow-2xl relative min-w-[320px] max-w-[400px] animate-scaleIn border border-gray-200 my-8`} onClick={e => e.stopPropagation()}>
-            <button className={`absolute top-4 right-4 text-2xl hover:scale-110 transition-transform ${theme === 'dark' ? 'text-gray-300 hover:text-white' : 'text-gray-500 hover:text-gray-700'}`} onClick={() => setShowContact(false)}>&times;</button>
-            
-            <div className="text-center mb-6">
-              <div className="w-12 h-12 bg-gradient-to-br from-accent to-accent-light rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg">
-                <span className="text-xl">💬</span>
+        {/* Side progress nav – visible on all slides */}
+        <nav className="fixed left-4 top-1/2 -translate-y-1/2 z-30 hidden lg:flex flex-col gap-1">
+          {navSections.map((s) => (
+            <button
+              key={s.id}
+              onClick={() => scrollToSection(s.id)}
+              className={`flex items-center gap-2 text-left transition-all duration-300 group py-1
+                ${activeSection === s.id ? 'opacity-100' : 'opacity-40 hover:opacity-70'}`}
+            >
+              <span className={`w-1.5 h-1.5 rounded-full shrink-0 transition-all duration-300 ${activeSection === s.id ? 'bg-accent w-2 h-2' : 'bg-stone-500'}`} />
+              <span className="text-[11px] font-medium uppercase tracking-wider max-w-0 group-hover:max-w-[88px] overflow-hidden transition-all duration-300 text-stone-400">{s.label}</span>
+            </button>
+          ))}
+        </nav>
+
+        {/* Floating Contact Button – on every slide except the first */}
+        {currentSectionIndex !== 0 && (
+          <button
+            className="fixed bottom-8 right-8 z-50 bg-accent text-white rounded-full shadow-lg p-4 transition-all duration-300 flex items-center gap-2 hover:scale-105 hover:shadow-xl hover:bg-accent-light font-medium text-sm"
+            onClick={() => setShowContact(true)}
+            aria-label="Contact Me"
+          >
+            📞 Contact Me
+          </button>
+        )}
+
+        {showContact && (
+          <div className="fixed inset-0 bg-stone-900/70 backdrop-blur-sm flex items-center justify-center z-[60] animate-fadeIn overflow-y-auto p-4" onClick={() => setShowContact(false)}>
+            <div className={`rounded-2xl p-6 shadow-2xl relative min-w-[320px] max-w-[400px] animate-scaleIn my-8
+              bg-stone-800 border border-stone-600 text-stone-100`} onClick={e => e.stopPropagation()}>
+              <button className={`absolute top-4 right-4 text-2xl hover:scale-110 transition-transform text-stone-400 hover:text-white`} onClick={() => setShowContact(false)}>&times;</button>
+              <div className="text-center mb-6">
+                <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg">
+                  <span className="text-xl">💬</span>
+                </div>
+                <h3 className="text-2xl font-bold mb-2 text-accent">Let&apos;s Connect!</h3>
+                <p className="text-sm text-stone-400">I&apos;d love to hear from you!</p>
               </div>
-              <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent">Let&apos;s Connect!</h3>
-              <p className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>I&apos;d love to hear from you!</p>
-            </div>
-            
-            <div className="space-y-3">
-              <div className={`flex items-center gap-3 p-2 rounded-xl ${theme === 'dark' ? 'hover:bg-gray-600' : 'hover:bg-gray-100'} transition-colors duration-300 group`}>
-                <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Image src="/gmail_logo.png" alt="Gmail" width={20} height={20} />
+              <div className="space-y-3">
+                <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-stone-700 transition-colors duration-300 group">
+                  <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Image src="/gmail_logo.png" alt="Gmail" width={20} height={20} />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-xs text-stone-400">Email</p>
+                    <a href="mailto:shambhavinavranjankumar@gmail.com" className="text-accent hover:text-accent-light transition-colors font-medium text-sm">shambhavinavranjankumar@gmail.com</a>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <p className={`text-xs ${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'}`}>Email</p>
-                  <a href="mailto:shambhavinavranjankumar@gmail.com" className="text-accent hover:text-accent-light transition-colors font-medium text-sm">shambhavinavranjankumar@gmail.com</a>
+                <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-stone-700 transition-colors duration-300 group">
+                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <span className="text-green-600 text-sm">📞</span>
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-xs text-stone-400">Phone</p>
+                    <a href="tel:6692104314" className="text-accent hover:text-accent-light transition-colors font-medium text-sm">669-210-4314</a>
+                  </div>
                 </div>
-              </div>
-              
-              <div className={`flex items-center gap-3 p-2 rounded-xl ${theme === 'dark' ? 'hover:bg-gray-600' : 'hover:bg-gray-100'} transition-colors duration-300 group`}>
-                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <span className="text-green-600 text-sm">📞</span>
+                <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-stone-700 transition-colors duration-300 group">
+                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-xs text-stone-400">LinkedIn</p>
+                    <a href="http://linkedin.com/in/shambhavinkumar" target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent-light transition-colors font-medium text-sm">/shambhavinkumar</a>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <p className={`text-xs ${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'}`}>Phone</p>
-                  <a href="tel:6692104314" className="text-accent hover:text-accent-light transition-colors font-medium text-sm">669-210-4314</a>
+                <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-stone-700 transition-colors duration-300 group">
+                  <div className="w-8 h-8 bg-pink-100 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <svg className="w-4 h-4 text-pink-600" fill="currentColor" viewBox="0 0 24 24"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5A4.25 4.25 0 0 0 16.25 3.5zm4.25 2.75a5.75 5.75 0 1 1-5.75 5.75 5.75 5.75 0 0 1 5.75-5.75zm0 1.5a4.25 4.25 0 1 0 4.25 4.25 4.25 4.25 0 0 0-4.25-4.25zm5.25 1.25a1 1 0 1 1-1 1 1 1 0 0 1 1-1z"/></svg>
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-xs text-stone-400">Instagram</p>
+                    <a href="https://www.instagram.com/shambhavi_123" target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent-light transition-colors font-medium text-sm">@shambhavi_123</a>
+                  </div>
                 </div>
-              </div>
-              
-              <div className={`flex items-center gap-3 p-2 rounded-xl ${theme === 'dark' ? 'hover:bg-gray-600' : 'hover:bg-gray-100'} transition-colors duration-300 group`}>
-                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                  </svg>
-                </div>
-                <div className="flex-1">
-                  <p className={`text-xs ${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'}`}>LinkedIn</p>
-                  <a href="http://linkedin.com/in/shambhavinkumar" target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent-light transition-colors font-medium text-sm">/shambhavinkumar</a>
-                </div>
-              </div>
-              
-              <div className={`flex items-center gap-3 p-2 rounded-xl ${theme === 'dark' ? 'hover:bg-gray-600' : 'hover:bg-gray-100'} transition-colors duration-300 group`}>
-                <div className="w-8 h-8 bg-pink-100 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <svg className="w-4 h-4 text-pink-600" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5A4.25 4.25 0 0 0 16.25 3.5zm4.25 2.75a5.75 5.75 0 1 1-5.75 5.75 5.75 5.75 0 0 1 5.75-5.75zm0 1.5a4.25 4.25 0 1 0 4.25 4.25 4.25 4.25 0 0 0-4.25-4.25zm5.25 1.25a1 1 0 1 1-1 1 1 1 0 0 1 1-1z"/>
-                  </svg>
-                </div>
-                <div className="flex-1">
-                  <p className={`text-xs ${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'}`}>Instagram</p>
-                  <a href="https://www.instagram.com/shambhavi_123" target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent-light transition-colors font-medium text-sm">@shambhavi_123</a>
-                </div>
-              </div>
-              
-              <div className={`flex items-center gap-3 p-2 rounded-xl ${theme === 'dark' ? 'hover:bg-gray-600' : 'hover:bg-gray-100'} transition-colors duration-300 group`}>
-                <div className="w-8 h-8 bg-sky-100 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <svg className="w-4 h-4 text-sky-600" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
-                  </svg>
-                </div>
-                <div className="flex-1">
-                  <p className={`text-xs ${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'}`}>Twitter</p>
-                  <a href="https://twitter.com/Shambhavi_123" target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent-light transition-colors font-medium text-sm">@Shambhavi_123</a>
+                <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-stone-700 transition-colors duration-300 group">
+                  <div className="w-8 h-8 bg-sky-100 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <svg className="w-4 h-4 text-sky-600" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-xs text-stone-400">Twitter</p>
+                    <a href="https://twitter.com/Shambhavi_123" target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent-light transition-colors font-medium text-sm">@Shambhavi_123</a>
+                  </div>
                 </div>
               </div>
-            </div>
-            
-            <div className="mt-6 pt-4 border-t border-gray-200 text-center">
-              <p className={`text-xs ${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'}`}>Looking forward to connecting with you! ✨</p>
+<div className="mt-6 pt-4 border-t border-stone-600 text-center">
+              <p className="text-xs text-stone-400">Looking forward to connecting with you! ✨</p>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+
+        <div className="h-screen overflow-hidden w-full">
+        <div
+          className="flex h-full transition-transform duration-500 ease-out"
+          style={{ transform: `translateX(-${currentSectionIndex * 100}%)` }}
+        >
+          {/* Slide 0: Hero */}
+          <div className="w-full flex-shrink-0 h-full overflow-hidden">
+      <div className="w-full flex flex-col items-center p-4 sm:p-10">
+      {/* Subtle modern background: gradient mesh */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <>
+          <div className="absolute top-0 -left-40 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 -right-40 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-stone-900/80 via-transparent to-transparent" />
+        </>
+      </div>
 
       {/* Navigation Menu Button */}
       <button
         onClick={() => setShowNavMenu(!showNavMenu)}
-        className="fixed top-8 left-8 z-50 bg-accent text-white rounded-full shadow-lg p-3 transition-all duration-300 hover:scale-110 hover:shadow-xl"
+        className="fixed top-8 left-8 z-50 bg-accent text-white rounded-full shadow-lg p-3 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-accent-light"
         aria-label="Navigation menu"
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -307,31 +291,41 @@ export default function Home() {
         </svg>
       </button>
 
-      {/* Navigation Menu */}
+      {/* Navigation Menu – refined dark card aesthetic */}
       {showNavMenu && (
-        <div className="fixed inset-0 bg-black/60 z-40" onClick={() => setShowNavMenu(false)}>
-          <div className={`absolute top-20 left-8 ${theme === 'dark' ? 'bg-gray-800/95' : 'bg-white/95'} backdrop-blur-md rounded-2xl shadow-2xl p-6 min-w-[280px] animate-scaleIn border border-gray-200`} onClick={e => e.stopPropagation()}>
-            <div className="flex items-center justify-between mb-4">
-              <h3 className={`text-lg font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>Quick Navigation</h3>
-              <button 
+        <div className="fixed inset-0 bg-stone-950/80 backdrop-blur-md z-40 animate-fadeIn" onClick={() => setShowNavMenu(false)}>
+          <div
+            className="absolute top-20 left-8 rounded-2xl border border-stone-600 bg-stone-800/98 shadow-2xl shadow-black/40 min-w-[288px] max-w-[320px] animate-scaleIn ring-1 ring-stone-700/50 overflow-hidden"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="border-b border-stone-600/80 px-5 py-4 flex items-center justify-between">
+              <h3 className="font-display text-base font-bold tracking-tight text-stone-100">Quick Navigation</h3>
+              <button
                 onClick={() => setShowNavMenu(false)}
-                className={`text-xl ${theme === 'dark' ? 'text-gray-300 hover:text-white' : 'text-gray-500 hover:text-gray-700'}`}
+                className="p-2 rounded-xl text-stone-400 hover:text-stone-100 hover:bg-stone-700/80 transition-colors duration-200"
+                aria-label="Close menu"
               >
-                ×
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
               </button>
             </div>
-            <div className="grid grid-cols-1 gap-2">
-              {navSections.map((section) => (
-                <button
-                  key={section.id}
-                  onClick={() => scrollToSection(section.id)}
-                  className="flex items-center gap-3 p-3 rounded-xl hover:bg-accent/10 transition-all duration-300 text-left group"
-                >
-                  <span className="text-xl">{section.icon}</span>
-                  <span className={`font-medium ${theme === 'dark' ? 'text-gray-300 group-hover:text-accent' : 'text-gray-700 group-hover:text-accent'}`}>{section.label}</span>
-                </button>
-              ))}
-            </div>
+            <nav className="p-2 py-3 grid grid-cols-1 gap-0.5 max-h-[70vh] overflow-y-auto">
+              {navSections.map((section) => {
+                const isActive = activeSection === section.id;
+                return (
+                  <button
+                    key={section.id}
+                    onClick={() => scrollToSection(section.id)}
+                    className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-all duration-200 border-l-[3px]
+                      ${isActive
+                        ? 'border-accent bg-accent/15 text-teal-200'
+                        : 'border-transparent text-stone-300 hover:bg-stone-700/60 hover:text-stone-100'}`}
+                  >
+                    <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-stone-700/50 text-lg shrink-0" aria-hidden>{section.icon}</span>
+                    <span className={`text-sm font-medium ${isActive ? 'text-accent' : ''}`}>{section.label}</span>
+                  </button>
+                );
+              })}
+            </nav>
           </div>
         </div>
       )}
@@ -340,7 +334,7 @@ export default function Home() {
       {showScrollTop && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-8 left-8 z-50 bg-accent text-white rounded-full shadow-lg p-3 transition-all duration-300 hover:scale-110 hover:shadow-xl"
+          className="fixed bottom-8 left-8 z-50 bg-accent text-white rounded-full shadow-lg p-3 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-accent-light"
           aria-label="Scroll to top"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -349,277 +343,262 @@ export default function Home() {
         </button>
       )}
 
-      {/* Hero Section */}
-      <header className="relative w-full max-w-3xl flex flex-col items-center gap-2 mb-10 z-10" data-aos="fade-down">
-        <div className="w-36 h-36 rounded-full overflow-hidden border-4 border-[var(--accent)] shadow-lg mb-2 hover:scale-105 transition-transform duration-300">
-          <Image src="/profile.jpg" alt="Profile" width={144} height={144} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" />
-        </div>
-        <div className="flex items-center gap-2 justify-center w-full">
-          <Image src="/logo.svg" alt="Logo" width={40} height={40} />
-          <h1 className="text-3xl sm:text-4xl font-bold accent drop-shadow-lg hover:scale-105 transition-transform duration-300 text-center">Shambhavi Navranjan Kumar</h1>
-          <button
-            className="ml-2 p-2 rounded-full border border-accent bg-white/70 dark:bg-gray-800/70 hover:bg-accent hover:text-white transition-colors duration-300 shadow"
-            aria-label="Switch theme"
-            onClick={() => setTheme(nextTheme)}
-            title={`Switch to ${nextTheme} mode`}
-          >
-            {themeIcon}
-          </button>
+      {/* Hero Section – bold, editorial */}
+      <header className="snap-section min-h-screen relative w-full max-w-5xl mx-auto px-4 pt-20 sm:pt-28 pb-12 sm:pb-16 z-10 flex flex-col justify-center" data-aos="fade-down">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8 md:gap-12">
+          <div className="flex flex-col sm:flex-row items-center sm:items-end gap-6 sm:gap-8">
+            <div className="relative shrink-0">
+              <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl overflow-hidden shadow-2xl ring-2 ring-accent/30 hover:ring-accent/60 transition-all duration-300 hover:scale-[1.02]">
+                <Image src="/profile.jpg" alt="Shambhavi Navranjan Kumar" width={144} height={144} className="w-full h-full object-cover" />
+              </div>
+              <div className="absolute -bottom-2 -right-2 w-10 h-10 rounded-xl bg-accent flex items-center justify-center shadow-lg">
+                <Image src="/logo.svg" alt="" width={24} height={24} />
+              </div>
+            </div>
+            <div className="text-center sm:text-left">
+              <p className="font-mono text-xs uppercase tracking-[0.3em] text-stone-500 mb-2">Portfolio</p>
+              <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight">
+                <span className="gradient-text">Shambhavi</span>
+                <br />
+                <span className="text-stone-100">Navranjan Kumar</span>
+              </h1>
+              <p className="mt-3 text-lg sm:text-xl font-medium text-stone-400">
+                Product & Engineering Management
+              </p>
+              <p className="mt-1 text-sm text-stone-500">San Jose, CA · MS @ SJSU</p>
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row items-center gap-4">
+            <button
+              onClick={() => setShowContact(true)}
+              className="cta-glow w-full sm:w-auto px-8 py-4 rounded-2xl bg-accent text-white font-semibold text-base hover:bg-accent-light transition-all duration-300 hover:scale-[1.02] hover:shadow-xl shadow-lg"
+            >
+              Get in touch
+            </button>
+            <a
+              href="#experience"
+              onClick={(e) => { e.preventDefault(); scrollToSection('experience'); }}
+              className={`w-full sm:w-auto px-8 py-4 rounded-2xl border-2 font-semibold text-base text-center transition-all duration-300 hover:scale-[1.02]
+                border-stone-600 text-stone-300 hover:border-accent hover:text-accent`}
+            >
+              View experience
+            </a>
+          </div>
         </div>
       </header>
-
-      {/* Objective */}
-      <section className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
-        {/* <div className="flex items-center gap-3 mb-4">
-          <span className="text-3xl animate-spin-slow">🎯</span>
-          <h2 className="text-3xl font-bold accent text-left hover:text-accent-light transition-colors">Objective</h2>
-        </div> */}
-        <div className="bg-white/30 backdrop-blur-md border border-white/40 rounded-2xl shadow-2xl p-8 border-2 border-accent hover:shadow-accent/50 transition-all duration-300 hover:scale-[1.02]">
-          <p className="text-base">Aspiring Product/Project Manager with 4 years of technical experience in software engineering and product delivery. Currently pursuing a Master&apos;s in Engineering Management to bridge business strategy, technology, and leadership for scalable, impactful solutions.</p>
-          <p className="italic accent mt-2 text-base">Currently based in San Jose, California, USA.</p>
+          </div>
+        </div>
+          {/* Slide 1: About */}
+          <div className="w-full flex-shrink-0 h-full overflow-hidden">
+      <div className="w-full flex flex-col items-center p-4 sm:p-10">
+      {/* About – overlapping “sticky note” cards */}
+      <section id="about" className="snap-section min-h-screen relative w-full max-w-5xl mb-12 z-10 flex flex-col justify-center py-16 overflow-hidden" data-aos="fade-up">
+        <div className="mb-10">
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100">About</h2>
+          <p className={`mt-1 text-sm ${"text-stone-400"}`}>In three notes</p>
+        </div>
+        <div className="relative min-h-[320px] sm:min-h-[360px] flex items-center justify-center">
+          {/* Back card – left, slight tilt */}
+          <div
+            className={`absolute left-0 sm:left-4 top-4 w-[92%] sm:w-80 max-w-sm rounded-xl p-5 shadow-lg border transition-all duration-300 hover:z-20 hover:scale-[1.02]
+              ${"bg-amber-950/40 border-amber-800/50"}
+              rotate-[-3deg] origin-bottom-left`}
+          >
+            <span className="text-2xl opacity-70">📐</span>
+            <p className="font-display font-bold text-stone-800 dark:text-stone-200 mt-2 text-lg">Built</p>
+            <p className="text-sm text-stone-600 dark:text-stone-400 mt-1">4+ years in software engineering & product delivery.</p>
+          </div>
+          {/* Middle card – right, slight tilt */}
+          <div
+            className={`absolute right-0 sm:right-4 top-8 w-[92%] sm:w-80 max-w-sm rounded-xl p-5 shadow-lg border transition-all duration-300 hover:z-20 hover:scale-[1.02]
+              ${"bg-teal-950/40 border-teal-800/50"}
+              rotate-[2deg] origin-bottom-right`}
+          >
+            <span className="text-2xl opacity-70">🎓</span>
+            <p className="font-display font-bold text-stone-800 dark:text-stone-200 mt-2 text-lg">Learning</p>
+            <p className="text-sm text-stone-600 dark:text-stone-400 mt-1">Masters in Engineering Management — strategy, tech & leadership.</p>
+          </div>
+          {/* Front card – center, main story */}
+          <div
+            className={`relative z-10 w-full max-w-lg rounded-2xl p-6 sm:p-8 shadow-xl border transition-all duration-300
+              ${"bg-stone-800/95 border-stone-600"}
+              rotate-0 mt-24 sm:mt-28`}
+          >
+            <p className="text-base sm:text-lg leading-relaxed text-stone-700 dark:text-stone-300">
+              Aspiring <span className="font-semibold text-stone-900 dark:text-stone-100">Product/Project Manager</span> bridging technical depth with business strategy. Building toward scalable, impactful solutions.
+            </p>
+          </div>
         </div>
       </section>
-
-      {/* Work Experience */}
-      <section id="experience" className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
-        <div className="flex items-center gap-3 mb-4">
-          <span className="text-3xl animate-bounce">💼</span>
-          <h2 className="text-3xl font-bold accent text-left hover:text-accent-light transition-colors">Work Experience</h2>
+          </div>
         </div>
-        <div className="grid grid-cols-1 gap-4" data-aos="fade-up" data-aos-delay="200">
-          {[
-            {
-              title: "🎮 Project Manager (Game Development) Intern",
-              company: "Resilience Inc. (Remote), USA",
-              dates: "(Present)",
-              points: [
-                "Led cross-functional teams to relaunch digital education tools, expanding user adoption by 35%",
-                "Managed project timelines and facilitated weekly progress reviews for strategic alignment",
-                "Built partnerships with 50+ schools to deploy gamified social-emotional learning content"
-              ]
-            },
-            {
-              title: "🤖 AI/Software Intern",
-              company: "Brain and Body Autism Center, Mountain View, CA, USA",
-              dates: "(Jun 2025 - Aug 2025)",
-              points: [
-                "Developed iOS-based AI-powered AAC app for non-verbal autistic children using on-device LLMs",
-                "Enhanced communication personalization by 40% through contextual AI implementation",
-                "Collaborated with clinical experts to improve UI/UX, boosting therapy usability by 60%"
-              ],
-              link: "https://www.tejutalks.com" 
-            },
-            {
-              title: "🧑‍💻 Software Product and Platform Engineering Analyst",
-              company: "Accenture Pvt Ltd, India",
-              dates: "(May 2022 – Jun 2024)",
-              points: [
-                "Led team of 4 developers to deliver 10+ responsive web pages for Accenture AWS Business Group",
-                "Resolved 100+ defects for Singapore Ministry of Education, enhancing efficiency by 40%",
-                "Managed 15+ API integrations and maintained 100% code consistency across projects"
-              ]
-            },
-            {
-              title: "🧑‍💼 Application Development Associate",
-              company: "Accenture Pvt Ltd, India",
-              dates: "(Dec 2020 – Apr 2022)",
-              points: [
-                "Built reusable UI component library with 20+ Angular components",
-                "Reduced page load time by 46% and increased user engagement by 33%",
-                "Achieved 90% code coverage through comprehensive unit testing implementation"
-              ]
-            },
-            {
-              title: "🧑‍🎓 Salesforce Intern",
-              company: "Tata Consultancy Services, India",
-              dates: "(Jan 2020 – Jun 2020)",
-              points: [
-                "Gained hands-on experience with Salesforce platform and Trailhead learning paths",
-                "Developed CRM customization and automation skills for workflow optimization",
-                "Contributed to internal project efficiency improvements using Salesforce tools"
-              ]
-            },
-            {
-              title: "🟠 Intern",
-              company: "Orange Tales, Nagpur, India",
-              dates: "(May 2019 – Apr 2020)",
-              points: [
-                "Executed local brand marketing campaigns, boosting event participation by 40%",
-                "Managed social media content creation and audience outreach strategies",
-                "Analyzed campaign metrics using Excel to drive data-informed marketing decisions"
-              ]
-            },
-            {
-              title: "🚶 Global Volunteer",
-              company: "AIESEC, Nagpur, India",
-              dates: "(Jun 2017 – Feb 2019)",
-              points: [
-                "Led intercultural marketing initiatives with international teams",
-                "Increased volunteer exchange program participation by 25%",
-                "Utilized Excel for impact metrics tracking and logistical planning"
-              ]
-            },
-            {
-              title: "🟦 Intern",
-              company: "eParivahan, Mumbai, India",
-              dates: "(Dec 2018 – Jan 2019)",
-              points: [
-                "Streamlined data entry and reporting processes using Microsoft Excel",
-                "Assisted in digitization efforts for legacy transport system records",
-                "Created summary dashboards to improve internal data accessibility"
-              ]
-            }
-          ].map((job, index) => (
-            <div 
-              key={index}
-              className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col items-start border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-500 hover:scale-[1.02] hover-lift ${
-                theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
-              }`}
-              data-aos="slide-in-left"
-              data-aos-delay={index * 150}
-            >
-              <div className="font-bold text-lg hover:text-accent-light transition-colors duration-300 group-hover:scale-105">{job.title}</div>
-              <div className="text-base w-full flex justify-between">
-                <span className="hover:text-accent-light transition-colors duration-300">{job.company}</span>
-                <span className="italic hover:text-accent-light transition-colors duration-300">{job.dates}</span>
-              </div>
-              <ul className="list-disc pl-5 space-y-1 mt-1 text-base">
-                {job.points.map((point, pointIndex) => (
-                  <li key={pointIndex} className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">{point}</li>
-                ))}
-              </ul>
-              {job.link && (
-                <div className="mt-3 w-full">
-                  <a 
-                    href={job.link} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-accent text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-accent-light hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
-                  >
-                    <span>🔗</span>
-                    View Project
-                  </a>
-                </div>
-              )}
-            </div>
-          ))}
+          {/* Slide 2: Experience */}
+          <div className="w-full flex-shrink-0 h-full overflow-hidden">
+      <div className="w-full flex flex-col items-center p-4 sm:p-10">
+      {/* Work Experience – role selector + detail panel */}
+      <section id="experience" className="snap-section min-h-screen relative w-full max-w-5xl mb-12 z-10 flex flex-col justify-center py-16" data-aos="fade-up">
+        <div className="mb-6">
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100">Work Experience</h2>
+          <p className={`mt-1 text-sm ${"text-stone-400"}`}>Select a role to view details</p>
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,260px)_1fr] gap-6 lg:gap-8">
+          {/* Role list – compact */}
+          <div className="flex lg:flex-col gap-2 overflow-x-auto pb-2 lg:pb-0 lg:max-h-[420px] lg:overflow-y-auto">
+            {EXPERIENCE_JOBS.map((job, index) => {
+              const isSelected = selectedExperienceIndex === index;
+              return (
+                <button
+                  key={index}
+                  type="button"
+                  onClick={() => setSelectedExperienceIndex(index)}
+                  className={`flex-shrink-0 lg:flex-shrink text-left rounded-xl px-4 py-3 transition-all duration-200 border-l-4 lg:border-l-4 min-w-[200px] lg:min-w-0
+                    ${isSelected
+                      ? "border-accent bg-accent/10 " + ("text-white")
+                      : "border-transparent " + ("hover:bg-stone-700/50 text-stone-400")}`}
+                >
+                  <span className="block font-semibold text-sm truncate">{job.title.replace(/^[^\s]+\s/, "").trim() || job.title}</span>
+                  <span className="block text-xs opacity-80 mt-0.5 truncate">{job.company}</span>
+                </button>
+              );
+            })}
+          </div>
+          {/* Detail panel – one role at a time */}
+          <div
+            className={`rounded-2xl p-6 sm:p-8 border shadow-lg flex flex-col items-start transition-all duration-300 min-h-[320px]
+              ${"bg-stone-800/90 border-stone-600"}`}
+          >
+            {(() => {
+              const job = EXPERIENCE_JOBS[selectedExperienceIndex];
+              if (!job) return null;
+              return (
+                <>
+                  <div className="font-bold text-lg sm:text-xl text-stone-900 dark:text-stone-100">{job.title}</div>
+                  <div className="text-sm flex flex-wrap gap-x-4 gap-y-1 mt-2 text-stone-600 dark:text-stone-400">
+                    <span>{job.company}</span>
+                    <span className="italic">{job.dates}</span>
+                  </div>
+                  <ul className="list-disc pl-5 space-y-2 mt-4 text-sm text-stone-700 dark:text-stone-300">
+                    {job.points.map((p, i) => (
+                      <li key={i} className="leading-relaxed">{p}</li>
+                    ))}
+                  </ul>
+                  {job.link && (
+                    <div className="mt-6">
+                      <a href={job.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-accent text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-accent-light transition-all duration-300">
+                        <span>🔗</span> View Project
+                      </a>
+                    </div>
+                  )}
+                </>
+              );
+            })()}
+          </div>
         </div>
       </section>
-
-      {/* Education */}
-      <section id="education" className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
-        <div className="flex items-center gap-3 mb-4">
-          <span className="text-3xl animate-pulse">🎓</span>
-          <h2 className="text-3xl font-bold accent text-left hover:text-accent-light transition-colors">Education</h2>
+          </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-6" data-aos="fade-up" data-aos-delay="200">
+          {/* Slide 3: Education */}
+          <div className="w-full flex-shrink-0 h-full overflow-hidden">
+      <div className="w-full flex flex-col items-center p-4 sm:p-10">
+      {/* Education – vertical timeline */}
+      <section id="education" className="snap-section min-h-screen relative w-full max-w-5xl mb-12 z-10 flex flex-col justify-center py-16" data-aos="fade-up">
+        <div className="mb-8">
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100">Education</h2>
+          <p className={`mt-1 text-sm ${"text-stone-400"}`}>Academic journey</p>
+        </div>
+        <div className="relative pl-8 sm:pl-10 border-l-2 border-accent/40 space-y-10">
           {[
-            {
-              degree: "Master of Science, Engineering Management",
-              school: "San Jose State University",
-              location: "San Jose, California, USA",
-              dates: "Aug 2024 – Present",
-              highlight: "Focus: Engineering management, leadership, and scalable solutions."
-            },
-            {
-              degree: "Executive Master of Business Administration",
-              school: "IIM Tiruchirappalli",
-              location: "Tiruchirappalli, India",
-              dates: "May 2023 – Jul 2024",
-              highlight: "Highlight: Advanced management training for executives."
-            },
-            {
-              degree: "Bachelor of Engineering, Information Technology",
-              school: "Shri Ramdeobaba College of Engineering and Management",
-              location: "Nagpur, Maharashtra, India",
-              dates: "Aug 2016 – May 2020",
-              highlight: "Highlight: Graduated with distinction in Information Technology."
-            }
+            { degree: "Master of Science, Engineering Management", school: "San Jose State University", location: "San Jose, California, USA", dates: "Aug 2024 – Present", highlight: "Focus: Engineering management, leadership, and scalable solutions." },
+            { degree: "Executive Master of Business Administration", school: "IIM Tiruchirappalli", location: "Tiruchirappalli, India", dates: "May 2023 – Jul 2024", highlight: "Advanced management training for executives." },
+            { degree: "Bachelor of Engineering, Information Technology", school: "Shri Ramdeobaba College of Engineering and Management", location: "Nagpur, Maharashtra, India", dates: "Aug 2016 – May 2020", highlight: "Graduated with distinction in Information Technology." }
           ].map((edu, index) => (
-            <div 
-              key={index}
-              className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col items-start border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-500 hover:scale-105 hover-lift group ${
-                theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
-              }`}
-              data-aos="slide-in-bottom"
-              data-aos-delay={index * 200}
-            >
-              <div className="font-bold text-lg hover:text-accent-light transition-colors duration-300 group-hover:scale-105">{edu.degree}</div>
-              <div className="text-base mb-1 hover:text-accent-light transition-colors duration-300">{edu.school}</div>
-              <div className="text-base mb-1 hover:text-accent-light transition-colors duration-300">{edu.location}</div>
-              <div className="italic text-base mb-2 hover:text-accent-light transition-colors duration-300">{edu.dates}</div>
-              <ul className="list-disc pl-4 text-base">
-                <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">{edu.highlight}</li>
-              </ul>
+            <div key={index} className="relative">
+              <span className="absolute -left-8 sm:-left-10 top-0 w-4 h-4 rounded-full bg-accent border-4 border-stone-100 dark:border-stone-900 shadow-sm" aria-hidden />
+              <div className={`rounded-xl p-5 sm:p-6 ${"bg-stone-800/60 border border-stone-600/60"}`}>
+                <span className={`inline-block text-xs font-semibold uppercase tracking-wider px-2.5 py-1 rounded-md mb-3 ${"bg-accent/20 text-teal-200"}`}>
+                  {edu.dates}
+                </span>
+                <h3 className="font-bold text-lg text-stone-900 dark:text-stone-100">{edu.degree}</h3>
+                <p className="text-sm font-medium text-accent mt-1">{edu.school}</p>
+                <p className="text-sm text-stone-600 dark:text-stone-400 mt-0.5">{edu.location}</p>
+                <p className="text-sm text-stone-700 dark:text-stone-300 mt-3 leading-relaxed">{edu.highlight}</p>
+              </div>
             </div>
           ))}
         </div>
       </section>
-
-      {/* Ambassador Roles */}
-      <section id="ambassador" className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
-        <div className="flex items-center gap-3 mb-4">
-          <span className="text-3xl animate-pulse">🌟</span>
-          <h2 className="text-3xl font-bold accent text-left hover:text-accent-light transition-colors">Ambassador Roles</h2>
+          </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6" data-aos="fade-up" data-aos-delay="200">
-          <div 
-            className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-6 flex flex-col items-start border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-500 hover:scale-105 hover-lift group ${
-              theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
-            }`}
-            data-aos="slide-in-left"
-            data-aos-delay="100"
-          >
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300">
-                <Image src="/adobe-logo.png" alt="Adobe Logo" width={48} height={48} />
+          {/* Slide 4: Ambassador */}
+          <div className="w-full flex-shrink-0 h-full overflow-hidden">
+      <div className="w-full flex flex-col items-center p-4 sm:p-10">
+      {/* Ambassador Roles – branded split panels */}
+      <section id="ambassador" className="snap-section min-h-screen relative w-full max-w-5xl mb-12 z-10 flex flex-col justify-center py-16" data-aos="fade-up">
+        <div className="mb-6">
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100">Ambassador Roles</h2>
+          <p className={`mt-1 text-sm ${"text-stone-400"}`}>Community & brand representation</p>
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 mt-6 overflow-hidden rounded-2xl border shadow-xl border-stone-200 dark:border-stone-600">
+          {/* Adobe – left panel with brand tint */}
+          <div className={`relative p-6 sm:p-8 flex flex-col ${"bg-gradient-to-br from-red-950/30 to-stone-800/90 border-r-0 lg:border-r border-stone-600"}`}>
+            <div className="flex items-start gap-4 mb-4">
+              <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center shadow-md flex-shrink-0 p-1.5 border border-stone-200 dark:border-stone-600">
+                <Image src="/adobe-logo.png" alt="Adobe" width={44} height={44} />
               </div>
-              <div className="font-bold text-xl hover:text-accent-light transition-colors duration-300 group-hover:scale-105">Adobe Student Ambassador</div>
+              <div>
+                <h3 className="font-display font-bold text-lg text-stone-900 dark:text-stone-100">Adobe Student Ambassador</h3>
+                <p className="text-sm text-stone-600 dark:text-stone-400 mt-0.5">Creative tools & technologies for the student community</p>
+              </div>
             </div>
-            <div className={`text-base mb-3 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-800'}`}>Representing Adobe&apos;s creative tools and technologies to the student community</div>
-            <ul className="list-disc pl-4 text-base space-y-2">
-              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Promoting Adobe&apos;s creative software solutions</li>
-              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Organizing workshops and training sessions</li>
-              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Supporting student community with design tools</li>
-              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Building creative skills and digital literacy</li>
+            <ul className="space-y-2 text-sm text-stone-700 dark:text-stone-300">
+              {["Promoting Adobe creative software solutions", "Organizing workshops and training sessions", "Supporting students with design tools", "Building creative skills and digital literacy"].map((item, i) => (
+                <li key={i} className="flex gap-2">
+                  <span className="text-red-500 dark:text-red-400 mt-0.5">▸</span>
+                  <span>{item}</span>
+                </li>
+              ))}
             </ul>
           </div>
-          
-          <div 
-            className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-6 flex flex-col items-start border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-500 hover:scale-105 hover-lift group ${
-              theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
-            }`}
-            data-aos="slide-in-right"
-            data-aos-delay="200"
-          >
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300">
-                <Image src="/fetch-ai-logo.svg" alt="Fetch AI Logo" width={48} height={48} />
+          {/* Fetch AI – right panel with brand tint */}
+          <div className={`relative p-6 sm:p-8 flex flex-col ${"bg-gradient-to-br from-teal-950/30 to-stone-800/90"}`}>
+            <div className="flex items-start gap-4 mb-4">
+              <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center shadow-md flex-shrink-0 p-1.5 border border-stone-200 dark:border-stone-600">
+                <Image src="/fetch-ai-logo.svg" alt="Fetch AI" width={44} height={44} />
               </div>
-              <div className="font-bold text-xl hover:text-accent-light transition-colors duration-300 group-hover:scale-105">Fetch AI Innovation Ambassador</div>
+              <div>
+                <h3 className="font-display font-bold text-lg text-stone-900 dark:text-stone-100">Fetch AI Innovation Ambassador</h3>
+                <p className="text-sm text-stone-600 dark:text-stone-400 mt-0.5">AI innovation & adoption in the academic community</p>
+              </div>
             </div>
-            <div className={`text-base mb-3 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-800'}`}>Leading innovation initiatives and AI adoption in the academic community</div>
-            <ul className="list-disc pl-4 text-base space-y-2">
-              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Advocating for AI innovation and adoption</li>
-              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Facilitating AI workshops and demonstrations</li>
-              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Connecting students with cutting-edge AI technologies</li>
-              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Promoting responsible AI development and usage</li>
+            <ul className="space-y-2 text-sm text-stone-700 dark:text-stone-300">
+              {["Advocating for AI innovation and adoption", "Facilitating AI workshops and demonstrations", "Connecting students with cutting-edge AI technologies", "Promoting responsible AI development and usage"].map((item, i) => (
+                <li key={i} className="flex gap-2">
+                  <span className="text-accent mt-0.5">▸</span>
+                  <span>{item}</span>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
       </section>
-
-      {/* Project Experience */}
-      <section id="projects" className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
-        <div className="flex items-center gap-3 mb-4">
-          <span className="text-3xl animate-pulse">🚀</span>
-          <h2 className="text-3xl font-bold accent text-left hover:text-accent-light transition-colors">Project Experience</h2>
+          </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6" data-aos="fade-up" data-aos-delay="200">
+          {/* Slide 5: Projects */}
+          <div className="w-full flex-shrink-0 h-full overflow-hidden">
+      <div className="w-full flex flex-col items-center p-4 sm:p-10">
+      {/* Project Experience – type badges + bento-style layout */}
+      <section id="projects" className="snap-section min-h-screen relative w-full max-w-5xl mb-12 z-10 flex flex-col justify-center py-16" data-aos="fade-up">
+        <div className="mb-6">
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100">Project Experience</h2>
+          <p className={`mt-1 text-sm ${"text-stone-400"}`}>Selected builds</p>
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mt-6">
           {[
             {
-              title: "📈 Stock Market Predictor, RCOEM",
+              title: "Stock Market Predictor",
+              org: "RCOEM",
               type: "Academic Project",
+              typeStyle: "bg-violet-500/20 text-violet-300 border-violet-500/40",
               points: [
                 "Developed a machine learning model to predict future stock prices using Yahoo! Finance data.",
                 "Applied LSTM algorithm for accurate stock closing price forecasting.",
@@ -627,47 +606,62 @@ export default function Home() {
               ]
             },
             {
-              title: "🧾 Subscription Killer, UCSD Hackathon",
+              title: "Subscription Killer",
+              org: "UCSD Hackathon",
               type: "Hackathon Project",
+              typeStyle: "bg-amber-500/20 text-amber-300 border-amber-500/40",
               points: [
                 "Developed a React + GPT-4 based AI app to identify, track, and cancel unwanted subscriptions.",
                 "Engineered smart dashboards and auto-cancellation workflows to reduce user spending."
               ]
             }
           ].map((project, index) => (
-            <div 
+            <div
               key={index}
-              className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col items-start border-2 border-accent min-h-[220px] hover:border-accent-light hover:shadow-accent/30 transition-all duration-500 hover:scale-105 hover-lift group ${
-                theme === 'dark' ? 'hover:bg-gray-800/95 text-white' : 'hover:bg-white/95 text-gray-900'
-              }`}
-              data-aos="slide-in-right"
-              data-aos-delay={index * 300}
+              className={`lg:col-span-6 rounded-2xl p-6 border shadow-lg flex flex-col transition-all duration-300 hover:shadow-xl
+                ${"bg-stone-800/90 border-stone-600"}
+                ${index === 0 ? "lg:col-start-1" : "lg:col-start-7"}`}
+              data-aos="fade-up"
+              data-aos-delay={index * 100}
             >
-              <div className="font-extrabold text-xl text-accent drop-shadow-sm hover:text-accent-light transition-colors duration-300 group-hover:scale-105">{project.title}</div>
-              <div className={`text-base font-semibold mb-2 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-800'} drop-shadow-sm hover:text-accent-light transition-colors duration-300`}>{project.type}</div>
-              <ul className="list-disc pl-4 text-base space-y-1">
+              <span className={`inline-block w-fit text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-lg border mb-4 ${project.typeStyle}`}>
+                {project.type}
+              </span>
+              <h3 className="font-display font-bold text-lg text-stone-900 dark:text-stone-100">{project.title}</h3>
+              <p className="text-sm text-accent font-medium mt-0.5">{project.org}</p>
+              <ul className="mt-4 space-y-2 text-sm text-stone-700 dark:text-stone-300">
                 {project.points.map((point, pointIndex) => (
-                  <li key={pointIndex} className={`hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform drop-shadow-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-900/90'}`}>{point}</li>
+                  <li key={pointIndex} className="flex gap-2 leading-relaxed">
+                    <span className="text-accent flex-shrink-0 mt-0.5">•</span>
+                    <span>{point}</span>
+                  </li>
                 ))}
               </ul>
             </div>
           ))}
         </div>
       </section>
-
-      {/* Technical Skills */}
-      <section id="skills" className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
-        <div className="flex items-center gap-3 mb-6">
-          <span className="text-3xl animate-spin-slow">🛠️</span>
-          <h2 className="text-3xl font-bold accent text-left hover:text-accent-light transition-colors">Technical Skills</h2>
+          </div>
         </div>
-        <div className="bg-white/30 backdrop-blur-md border border-white/40 rounded-2xl shadow-2xl p-8 border-2 border-accent hover:shadow-accent/50 transition-all duration-300" data-aos="zoom-in" data-aos-delay="200">
+          {/* Slide 6: Skills */}
+          <div className="w-full flex-shrink-0 h-full overflow-y-auto">
+      <div className="w-full flex flex-col items-center p-4 sm:p-10">
+      {/* Technical Skills */}
+      <section id="skills" className="snap-section min-h-screen relative w-full max-w-5xl mb-12 z-10 flex flex-col justify-center py-16" data-aos="fade-up">
+        <div className="mb-6">
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100">Technical Skills</h2>
+        </div>
+        <div className={`rounded-2xl p-6 sm:p-8 border shadow-lg transition-all duration-300
+          bg-stone-800/80 border-stone-600`} data-aos="zoom-in" data-aos-delay="200">
           {/* Skill Categories as Tabs */}
           <div className="flex flex-wrap gap-2 mb-6" data-aos="fade-up" data-aos-delay="300">
             {SKILL_TABS.map((tab, index) => (
               <button
                 key={tab}
-                className={`px-3 py-1 rounded-full text-xs font-semibold transition-all duration-300 hover:scale-110 ${activeTab === tab ? "bg-accent text-white scale-105 shadow-lg" : "bg-black/60 text-white hover:bg-accent-light hover:shadow-md"}`}
+                className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300
+                  ${activeTab === tab
+                    ? 'bg-accent text-white shadow-md'
+                    : 'bg-stone-700 text-stone-300 hover:bg-stone-600'}`}
                 onClick={() => setActiveTab(tab)}
                 data-aos="fade-up"
                 data-aos-delay={index * 50}
@@ -690,134 +684,92 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Certifications */}
-      <section id="certifications" className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
-        <div className="flex items-center gap-3 mb-4">
-          <span className="text-3xl animate-pulse">🎓</span>
-          <h2 className="text-3xl font-bold accent text-left hover:text-accent-light transition-colors">Certifications</h2>
+          </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
-          {/* Advanced Google Analytics */}
-          <div className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-300 hover:scale-105 hover-lift ${
-            theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
-          }`} data-aos="zoom-in" data-aos-delay="100">
-            <div className="font-bold text-lg mb-1">Advanced Google Analytics</div>
-            <div className={`text-base mb-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-800'}`}>Google Analytics Academy</div>
-            <div className="text-sm mb-1">Issued Feb 2023 · Expires Apr 2026</div>
-          </div>
-          {/* Managing Project Risks and Changes */}
-          <div className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-300 hover:scale-105 hover-lift ${
-            theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
-          }`} data-aos="zoom-in" data-aos-delay="200">
-            <div className="font-bold text-lg mb-1">Managing Project Risks and Changes</div>
-            <div className={`text-base mb-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-800'}`}>Coursera</div>
-            <div className="text-sm mb-1">Issued Jul 2020</div>
-          </div>
-          {/* SQL for Data Science */}
-          <div className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-300 hover:scale-105 hover-lift ${
-            theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
-          }`} data-aos="zoom-in" data-aos-delay="300">
-            <div className="font-bold text-lg mb-1">SQL for Data Science</div>
-            <div className={`text-base mb-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-800'}`}>Coursera</div>
-            <div className="text-sm mb-1">Issued Jul 2020</div>
-          </div>
-          {/* Google Analytics for Beginners */}
-          <div className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-300 hover:scale-105 hover-lift ${
-            theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
-          }`} data-aos="zoom-in" data-aos-delay="400">
-            <div className="font-bold text-lg mb-1">Google Analytics for Beginners</div>
-            <div className={`text-base mb-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-800'}`}>Google Analytics Academy</div>
-            <div className="text-sm mb-1">Issued Jun 2020</div>
-          </div>
-          {/* Initiating and Planning Projects */}
-          <div className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-300 hover:scale-105 hover-lift ${
-            theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
-          }`} data-aos="zoom-in" data-aos-delay="500">
-            <div className="font-bold text-lg mb-1">Initiating and Planning Projects</div>
-            <div className={`text-base mb-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-800'}`}>Coursera</div>
-            <div className="text-sm mb-1">Issued Jun 2020</div>
-            <div className="text-xs mb-1 text-gray-400">Credential ID VVKFP6SFDELC</div>
-          </div>
-          {/* Introduction to Google Docs */}
-          <div className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-300 hover:scale-105 hover-lift ${
-            theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
-          }`} data-aos="zoom-in" data-aos-delay="600">
-            <div className="font-bold text-lg mb-1">Introduction to Google Docs</div>
-            <div className={`text-base mb-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-800'}`}>Coursera</div>
-            <div className="text-sm mb-1">Issued Jun 2020</div>
-            <div className="text-xs mb-1 text-gray-400">Credential ID KMDHGHLT5DU8</div>
-          </div>
-          {/* The Fundamentals of Digital Marketing */}
-          <div className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-300 hover:scale-105 hover-lift ${
-            theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
-          }`} data-aos="zoom-in" data-aos-delay="700">
-            <div className="font-bold text-lg mb-1">The Fundamentals of Digital Marketing</div>
-            <div className={`text-base mb-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-800'}`}>Google Digital Garage</div>
-            <div className="text-sm mb-1">Issued Jun 2020</div>
-          </div>
-          {/* AI for Everyone */}
-          <div className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-300 hover:scale-105 hover-lift ${
-            theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
-          }`} data-aos="zoom-in" data-aos-delay="800">
-            <div className="font-bold text-lg mb-1">AI for Everyone</div>
-            <div className={`text-base mb-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-800'}`}>Coursera</div>
-            <div className="text-sm mb-1">Issued Mar 2020</div>
-          </div>
+          {/* Slide 7: Certifications */}
+          <div className="w-full flex-shrink-0 h-full overflow-hidden">
+      <div className="w-full flex flex-col items-center p-4 sm:p-10">
+      {/* Certifications – grid */}
+      <section id="certifications" className="snap-section min-h-screen relative w-full max-w-5xl mb-12 z-10 flex flex-col justify-center py-16" data-aos="fade-up">
+        <div className="mb-6">
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100">Certifications</h2>
+          <p className={`mt-1 text-sm ${"text-stone-400"}`}>Credentials & courses</p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {[
+            { title: "Certified Scrum Product Owner® (CSPO)", org: "Scrum Alliance", date: "Mar 2026 · Active through Mar 2028", id: "001820201" },
+            { title: "Advanced Google Analytics", org: "Google Analytics Academy", date: "Feb 2023 · Expires Apr 2026", id: null },
+            { title: "Managing Project Risks and Changes", org: "Coursera", date: "Jul 2020", id: null },
+            { title: "SQL for Data Science", org: "Coursera", date: "Jul 2020", id: null },
+            { title: "Google Analytics for Beginners", org: "Google Analytics Academy", date: "Jun 2020", id: null },
+            { title: "Initiating and Planning Projects", org: "Coursera", date: "Jun 2020", id: "VVKFP6SFDELC" },
+            { title: "Introduction to Google Docs", org: "Coursera", date: "Jun 2020", id: "KMDHGHLT5DU8" },
+            { title: "The Fundamentals of Digital Marketing", org: "Google Digital Garage", date: "Jun 2020", id: null },
+            { title: "AI for Everyone", org: "Coursera", date: "Mar 2020", id: null },
+          ].map((cert, i) => (
+            <div
+              key={cert.title}
+              className={`rounded-xl p-5 border flex flex-col min-h-[140px] transition-all duration-200 hover:shadow-lg
+                bg-stone-800/90 border-stone-600 shadow-sm`}
+              data-aos="fade-up"
+              data-aos-delay={i * 50}
+            >
+              <p className="font-display font-bold text-base text-stone-900 dark:text-stone-100 leading-snug">{cert.title}</p>
+              <p className="text-sm text-accent font-medium mt-1">{cert.org}</p>
+              <p className="text-xs mt-2 text-stone-500">{cert.date}</p>
+              {cert.id && <p className="text-xs text-stone-400 dark:text-stone-500 mt-1">ID: {cert.id}</p>}
+            </div>
+          ))}
         </div>
       </section>
 
       {/* Extra-Curricular Activities & Achievements */}
-      <section id="achievements" className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
-        <div className="flex items-center gap-3 mb-4">
-          <span className="text-3xl animate-pulse">🏆</span>
-          <h2 className="text-3xl font-bold accent text-left hover:text-accent-light transition-colors">Extra-Curricular Activities & Achievements</h2>
+      <section id="achievements" className="snap-section min-h-screen relative w-full max-w-5xl mb-12 z-10 flex flex-col justify-center py-16" data-aos="fade-up">
+        <div className="mb-6">
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100">Achievements &amp; Extra-Curricular</h2>
         </div>
         <div className="grid grid-cols-1 gap-4 mt-6" data-aos="fade-up" data-aos-delay="200">
-          {/* Achievements */}
-          <div className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-500 hover:scale-105 hover-lift group ${
-            theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
-          }`} data-aos="slide-in-left" data-aos-delay="100">
-            <div className="font-bold text-lg mb-3 hover:text-accent-light transition-colors duration-300 group-hover:scale-105">🏅 Achievements</div>
-            <ul className="list-disc pl-4 text-base space-y-2">
-              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Secured first division in Kathak</li>
-              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Visharadh in Kathak</li>
-              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Performed in World Bengali Dance Conference</li>
+          <div className={`rounded-2xl p-5 border shadow-md flex flex-col transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5
+            bg-stone-800/80 border-stone-600`} data-aos="slide-in-left" data-aos-delay="100">
+            <div className="font-bold text-lg text-stone-900 dark:text-stone-100 mb-3">🏅 Achievements</div>
+            <ul className="list-disc pl-4 text-sm text-stone-700 dark:text-stone-300 space-y-1">
+              <li>Secured first division in Kathak</li>
+              <li>Visharadh in Kathak</li>
+              <li>Performed in World Bengali Dance Conference</li>
             </ul>
           </div>
-          
-          {/* Extra-Curricular Activities */}
-          <div className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-xl shadow p-4 flex flex-col border-2 border-accent hover:border-accent-light hover:shadow-accent/30 transition-all duration-500 hover:scale-105 hover-lift group ${
-            theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
-          }`} data-aos="slide-in-right" data-aos-delay="200">
-            <div className="font-bold text-lg mb-3 hover:text-accent-light transition-colors duration-300 group-hover:scale-105">🎭 Extra-Curricular Activities</div>
-            <ul className="list-disc pl-4 text-base space-y-2">
-              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Part of Hindu-Yuva Club, SJSU</li>
-              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Member of organizing committee of various college events, RCOEM</li>
-              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Member of Students&apos; Representative Council, 2018-19, RCOEM</li>
-              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Member of literary club, RCOEM</li>
-              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Member of Dance club, RCOEM</li>
-              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Core Committee Vice President of Global Village and Balakalakaar, 2018, AIESEC</li>
-              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Member of Rotaract Club, 2017-18</li>
-              <li className="hover:text-accent-light transition-colors duration-300 hover:translate-x-1 transform">Volunteered in 79th Indian Roads Congress</li>
+          <div className={`rounded-2xl p-5 border shadow-md flex flex-col transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5
+            bg-stone-800/80 border-stone-600`} data-aos="slide-in-right" data-aos-delay="200">
+            <div className="font-bold text-lg text-stone-900 dark:text-stone-100 mb-3">🎭 Extra-Curricular Activities</div>
+            <ul className="list-disc pl-4 text-sm text-stone-700 dark:text-stone-300 space-y-1">
+              <li>Part of Hindu-Yuva Club, SJSU</li>
+              <li>Member of organizing committee of various college events, RCOEM</li>
+              <li>Member of Students&apos; Representative Council, 2018-19, RCOEM</li>
+              <li>Member of literary club, RCOEM</li>
+              <li>Member of Dance club, RCOEM</li>
+              <li>Core Committee Vice President of Global Village and Balakalakaar, 2018, AIESEC</li>
+              <li>Member of Rotaract Club, 2017-18</li>
+              <li>Volunteered in 79th Indian Roads Congress</li>
             </ul>
           </div>
         </div>
       </section>
-
-      {/* Entrepreneurship */}
-      <section id="entrepreneurship" className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
-        <div className="flex items-center gap-3 mb-4">
-          <span className="text-3xl animate-pulse">💼</span>
-          <h2 className="text-3xl font-bold accent text-left hover:text-accent-light transition-colors">Entrepreneurship</h2>
+          </div>
         </div>
-        <div className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-2xl shadow-2xl p-8 border-2 border-accent hover:shadow-accent/50 transition-all duration-300 hover:scale-[1.02] ${
-          theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
-        }`} data-aos="zoom-in" data-aos-delay="200">
+          {/* Slide 9: Entrepreneurship */}
+          <div className="w-full flex-shrink-0 h-full overflow-y-auto">
+      <div className="w-full flex flex-col items-center p-4 sm:p-10">
+      {/* Entrepreneurship */}
+      <section id="entrepreneurship" className="snap-section min-h-screen relative w-full max-w-5xl mb-12 z-10 flex flex-col justify-center py-16" data-aos="fade-up">
+        <div className="mb-6">
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100">Entrepreneurship</h2>
+        </div>
+        <div className={`rounded-2xl p-6 sm:p-8 border shadow-lg transition-all duration-300
+          bg-stone-800/80 border-stone-600`} data-aos="zoom-in" data-aos-delay="200">
           <div className="text-center">
-            <div className="font-bold text-xl mb-4 hover:text-accent-light transition-colors duration-300">💎 Coffer Chics</div>
-            <p className="text-base mb-4">Founded and operated a successful Instagram-based jewellery business in India, specializing in handmade custom jewellery, demonstrating entrepreneurial spirit and digital marketing skills.</p>
-            <p className="text-base mb-4">Instagram: <a href="https://www.instagram.com/coffer_chics" target="_blank" rel="noopener noreferrer" className="text-accent underline hover:no-underline hover:text-accent-light transition-colors">@coffer_chics</a></p>
+            <div className="font-bold text-xl text-stone-900 dark:text-stone-100 mb-4">💎 Coffer Chics</div>
+            <p className="text-base text-stone-700 dark:text-stone-300 mb-4">Founded and operated a successful Instagram-based jewellery business in India, specializing in handmade custom jewellery, demonstrating entrepreneurial spirit and digital marketing skills.</p>
+            <p className="text-base mb-4 text-stone-700 dark:text-stone-300">Instagram: <a href="https://www.instagram.com/coffer_chics" target="_blank" rel="noopener noreferrer" className="text-accent underline hover:no-underline hover:text-accent-light transition-colors">@coffer_chics</a></p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
               {[
                 { icon: "🚀", title: "Growth", desc: "Rapidly growing Instagram presence with engaged customer base" },
@@ -825,14 +777,11 @@ export default function Home() {
               ].map((card) => (
                 <div
                   key={card.title}
-                  className={`rounded-xl p-4 border border-accent transition-all duration-300 ${
-                    theme === 'dark'
-                      ? 'bg-gray-800/80 text-white'
-                      : 'bg-gradient-to-br from-pink-50 via-white to-yellow-100 text-gray-900'
-                  }`}
+                  className={`rounded-xl p-4 border transition-all duration-300
+                    bg-stone-700/50 border-stone-600 text-stone-200`}
                 >
                   <div className="font-semibold text-lg mb-2">{card.icon} {card.title}</div>
-                  <p className="text-sm">{card.desc}</p>
+                  <p className="text-sm opacity-90">{card.desc}</p>
                 </div>
               ))}
             </div>
@@ -865,24 +814,26 @@ export default function Home() {
                   <Image src="/coffer-chics-8.png" alt="Coffer Chics Jewellery Post 8" width={200} height={200} className="w-full h-full object-cover" />
                 </div>
               </div>
-              <p className={`text-sm text-center mt-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-800'}`}>Click <a href="https://www.instagram.com/coffer_chics" target="_blank" rel="noopener noreferrer" className="text-accent underline hover:no-underline">here</a> to view more posts</p>
+              <p className="text-sm text-center mt-4 text-stone-400">Click <a href="https://www.instagram.com/coffer_chics" target="_blank" rel="noopener noreferrer" className="text-accent underline hover:no-underline">here</a> to view more posts</p>
             </div>
           </div>
         </div>
       </section>
-
-      {/* Event Management */}
-      <section id="events" className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
-        <div className="flex items-center gap-3 mb-4">
-          <span className="text-3xl animate-pulse">🎪</span>
-          <h2 className="text-3xl font-bold accent text-left hover:text-accent-light transition-colors">Event Management</h2>
+          </div>
         </div>
-        <div className={`bg-white/30 backdrop-blur-md border border-white/40 rounded-2xl shadow-2xl p-8 border-2 border-accent hover:shadow-accent/50 transition-all duration-300 hover:scale-[1.02] ${
-          theme === 'dark' ? 'hover:bg-gray-800/95' : 'hover:bg-white/95'
-        }`} data-aos="zoom-in" data-aos-delay="200">
+          {/* Slide 10: Events */}
+          <div className="w-full flex-shrink-0 h-full overflow-y-auto">
+      <div className="w-full flex flex-col items-center p-4 sm:p-10">
+      {/* Event Management */}
+      <section id="events" className="snap-section min-h-screen relative w-full max-w-5xl mb-12 z-10 flex flex-col justify-center py-16" data-aos="fade-up">
+        <div className="mb-6">
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100">Event Management</h2>
+        </div>
+        <div className={`rounded-2xl p-6 sm:p-8 border shadow-lg transition-all duration-300
+          bg-stone-800/80 border-stone-600`} data-aos="zoom-in" data-aos-delay="200">
           <div className="text-center mb-6">
-            <div className="font-bold text-2xl mb-4 hover:text-accent-light transition-colors duration-300">🎭 Blindfolded Conversations</div>
-            <p className="text-base mb-4">Successfully organized and managed a two-day collaborative event with Lush House cafe in Nagpur, demonstrating comprehensive event management skills.</p>
+            <div className="font-bold text-xl text-stone-900 dark:text-stone-100 mb-4">🎭 Blindfolded Conversations</div>
+            <p className="text-base text-stone-700 dark:text-stone-300 mb-4">Successfully organized and managed a two-day collaborative event with Lush House cafe in Nagpur, demonstrating comprehensive event management skills.</p>
           </div>
           
           <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4`}>
@@ -890,26 +841,23 @@ export default function Home() {
               { icon: "📱", title: "Social Media Marketing", desc: "Managed complete social media marketing campaign, created posters and hard banners using Photoshop and Canva" },
               { icon: "🎨", title: "Event Decor", desc: "Handled complete event decoration and visual setup for the two-day event" },
               { icon: "📊", title: "Event Success", desc: "Achieved 500+ footfall with media coverage from newspaper reporters" },
-              { icon: "��", title: "Collaboration", desc: "Partnered with Lush House cafe in Nagpur for successful event execution" },
+              { icon: "🤝", title: "Collaboration", desc: "Partnered with Lush House cafe in Nagpur for successful event execution" },
               { icon: "📰", title: "Media Coverage", desc: "Event was covered by newspaper reporters, highlighting its success and impact" },
               { icon: "🎯", title: "Project Management", desc: "Coordinated all aspects from planning to execution, ensuring seamless event delivery" },
             ].map((card) => (
               <div
                 key={card.title}
-                className={`rounded-xl p-4 border border-accent transition-all duration-300 ${
-                  theme === 'dark'
-                    ? 'bg-gray-800/80 text-white'
-                    : 'bg-gradient-to-br from-yellow-50 via-white to-orange-100 text-gray-900'
-                }`}
+                className={`rounded-xl p-4 border transition-all duration-300
+                  bg-stone-700/50 border-stone-600 text-stone-200`}
               >
                 <div className="font-semibold text-lg mb-2">{card.icon} {card.title}</div>
-                <p className="text-sm">{card.desc}</p>
+                <p className="text-sm opacity-90">{card.desc}</p>
               </div>
             ))}
           </div>
           
           <div className="mt-8">
-            <div className="font-semibold text-lg mb-4 text-center">📸 Event Highlights</div>
+            <div className="font-semibold text-lg mb-4 text-center text-stone-900 dark:text-stone-100">📸 Event Highlights</div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {/* Event Images */}
               <div className="aspect-square rounded-lg shadow-md hover:scale-105 transition-transform duration-300 overflow-hidden">
@@ -931,50 +879,59 @@ export default function Home() {
                 <Image src="/event-6.png" alt="Blindfolded Conversations Event 6" width={200} height={200} className="w-full h-full object-cover" />
               </div>
             </div>
-            <p className={`text-sm text-center mt-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-800'}`}>Event photos showcasing the successful execution of Blindfolded Conversations</p>
+            <p className="text-sm text-center mt-4 text-stone-400">Event photos showcasing the successful execution of Blindfolded Conversations</p>
           </div>
         </div>
       </section>
-
-      {/* Download Resume */}
-      <section id="resume" className="relative w-full max-w-5xl mb-10 z-10" data-aos="fade-up">
-        <div className="flex items-center gap-3 mb-4">
-          <span className="text-3xl animate-pulse">📄</span>
-          <h2 className="text-3xl font-bold accent text-left hover:text-accent-light transition-colors">Resume</h2>
+          </div>
         </div>
-        <div className="bg-white/30 backdrop-blur-md border border-white/40 rounded-2xl shadow-2xl p-8 border-2 border-accent hover:shadow-accent/50 transition-all duration-300 hover:scale-[1.02] text-center">
-          <p className="text-base mb-6">Download my detailed resume to learn more about my experience, skills, and achievements.</p>
+          {/* Slide 11: Resume */}
+          <div className="w-full flex-shrink-0 h-full overflow-hidden">
+      <div className="w-full flex flex-col items-center p-4 sm:p-10">
+      {/* Download Resume */}
+      <section id="resume" className="snap-section min-h-screen relative w-full max-w-5xl mb-12 z-10 flex flex-col justify-center py-16" data-aos="fade-up">
+        <div className="mb-6">
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100">Resume</h2>
+        </div>
+        <div className={`rounded-2xl p-8 border shadow-lg text-center transition-all duration-300
+          bg-stone-800/80 border-stone-600`}>
+          <p className="text-base text-stone-700 dark:text-stone-300 mb-6">Download my detailed resume to learn more about my experience, skills, and achievements.</p>
           <a 
             href="/resume.pdf" 
             download="Shambhavi_Kumar_Resume.pdf"
-            className="inline-flex items-center gap-3 bg-accent text-white px-8 py-4 rounded-xl font-semibold hover:bg-accent-light hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl hover-lift"
+            className="inline-flex items-center gap-3 bg-accent text-white px-8 py-4 rounded-xl font-semibold hover:bg-accent-light transition-all duration-300 shadow-lg hover:shadow-xl"
           >
             <span className="text-xl">📥</span>
             Download Resume (PDF)
           </a>
-          <p className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-800'} mt-4`}>Click the button above to download my resume</p>
+          <p className="text-sm text-stone-400 mt-4">Click the button above to download my resume</p>
         </div>
       </section>
+        </div>
+        </div>
+        </div>
+      </div>
     </div>
     </>
   );
 }
 
-// SkillCard component
+// SkillCard component – modern teal/stone palette
 function SkillCard({ icon, name, category }: { icon: React.ReactNode; name: string; category: string }) {
-  const categoryColors = {
-    Frontend: "bg-gradient-to-br from-pink-900 to-accent-light",
-    Backend: "bg-gradient-to-br from-blue-900 to-accent",
-    Cloud: "bg-gradient-to-br from-teal-900 to-accent-light",
-    Tools: "bg-gradient-to-br from-purple-900 to-accent-light",
-    Languages: "bg-gradient-to-br from-yellow-900 to-accent-light",
-    Specializations: "bg-gradient-to-br from-orange-700 to-accent-light",
+  const categoryColors: Record<string, string> = {
+    Frontend: "bg-teal-700 hover:bg-teal-600",
+    Backend: "bg-teal-800 hover:bg-teal-700",
+    Cloud: "bg-stone-700 hover:bg-stone-600",
+    Tools: "bg-amber-800/90 hover:bg-amber-700/90",
+    Languages: "bg-teal-600 hover:bg-teal-500",
+    Specializations: "bg-amber-900/90 hover:bg-amber-800/90",
   };
+  const bg = categoryColors[category] ?? "bg-stone-600 hover:bg-stone-500";
   return (
-    <div className={`flex flex-col items-center justify-center rounded-xl shadow-md p-4 min-h-[100px] ${categoryColors[category as keyof typeof categoryColors]} text-white hover:scale-110 transition-all duration-300 hover:shadow-lg hover:shadow-accent/30 group`}>
-      <div className="text-3xl mb-2 group-hover:scale-125 transition-transform duration-300">{icon}</div>
-      <div className="text-sm font-semibold text-center group-hover:text-accent-light transition-colors">{name}</div>
-      <div className="text-xs mt-1 opacity-70 group-hover:opacity-100 transition-opacity">{category}</div>
+    <div className={`flex flex-col items-center justify-center rounded-xl shadow-md p-4 min-h-[100px] ${bg} text-white transition-all duration-300 hover:scale-105 hover:shadow-lg group`}>
+      <div className="text-2xl mb-2 group-hover:scale-110 transition-transform duration-300">{icon}</div>
+      <div className="text-sm font-semibold text-center">{name}</div>
+      <div className="text-xs mt-1 opacity-80">{category}</div>
     </div>
   );
 }
