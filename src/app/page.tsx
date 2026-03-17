@@ -133,7 +133,7 @@ export default function Home() {
   };
 
   const goToNextSection = () => {
-    setCurrentSectionIndex(i => Math.min(CARD_IDS.length - 1, i + 1));
+    setCurrentSectionIndex(i => (i + 1) % CARD_IDS.length);
   };
   const goToPrevSection = () => {
     setCurrentSectionIndex(i => Math.max(0, i - 1));
@@ -715,7 +715,11 @@ export default function Home() {
           ))}
         </div>
       </section>
-
+        </div>
+        </div>
+          {/* Slide 8: Achievements */}
+          <div className="w-full flex-shrink-0 h-full overflow-y-auto">
+      <div className="w-full flex flex-col items-center p-4 sm:p-10">
       {/* Extra-Curricular Activities & Achievements */}
       <section id="achievements" className="snap-section min-h-screen relative w-full max-w-5xl mb-12 z-10 flex flex-col justify-center py-16" data-aos="fade-up">
         <div className="mb-6">
@@ -747,7 +751,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-          </div>
+        </div>
         </div>
           {/* Slide 9: Entrepreneurship */}
           <div className="w-full flex-shrink-0 h-full overflow-y-auto">
