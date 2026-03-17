@@ -404,10 +404,10 @@ export default function Home() {
         </button>
       )}
 
-      {/* Hero Section – bold, editorial */}
-      <header className="snap-section min-h-screen relative w-full max-w-5xl mx-auto px-4 pt-20 sm:pt-28 pb-12 sm:pb-16 z-10 flex flex-col justify-center" data-aos="fade-down">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8 md:gap-12">
-          <div className="flex flex-col sm:flex-row items-center sm:items-end gap-6 sm:gap-8">
+      {/* Hero Section – bold, editorial, centered */}
+      <header className="snap-section min-h-screen relative w-full max-w-5xl mx-auto px-4 pt-20 sm:pt-28 pb-12 sm:pb-16 z-10 flex flex-col justify-center items-center text-center" data-aos="fade-down">
+        <div className="flex flex-col items-center justify-center gap-8 w-full">
+          <div className="flex flex-col items-center gap-6 sm:gap-8">
             <div className="relative shrink-0">
               <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl overflow-hidden shadow-2xl ring-2 ring-accent/30 hover:ring-accent/60 transition-all duration-300 hover:scale-[1.02]">
                 <Image src="/profile.jpg" alt="Shambhavi Navranjan Kumar" width={144} height={144} className="w-full h-full object-cover" />
@@ -416,7 +416,7 @@ export default function Home() {
                 <Image src="/logo.svg" alt="" width={24} height={24} />
               </div>
             </div>
-            <div className="text-center sm:text-left">
+            <div className="text-center">
               <p className="font-mono text-xs uppercase tracking-[0.3em] text-stone-500 mb-2">Portfolio</p>
               <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight">
                 <span className="gradient-text">Shambhavi</span>
@@ -429,7 +429,7 @@ export default function Home() {
               <p className="mt-1 text-sm text-stone-500">San Jose, CA · MS @ SJSU</p>
             </div>
           </div>
-          <div className="flex flex-col sm:flex-row items-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
               onClick={() => setShowContact(true)}
               className="cta-glow w-full sm:w-auto px-8 py-4 rounded-2xl bg-accent text-white font-semibold text-base hover:bg-accent-light transition-all duration-300 hover:scale-[1.02] hover:shadow-xl shadow-lg"
