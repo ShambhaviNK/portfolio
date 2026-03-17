@@ -426,7 +426,7 @@ export default function Home() {
       {/* About – overlapping “sticky note” cards */}
       <section id="about" className="snap-section min-h-screen relative w-full max-w-5xl mb-12 z-10 flex flex-col justify-center py-16 overflow-hidden" data-aos="fade-up">
         <div className="mb-10">
-          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100">About</h2>
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-100">About</h2>
           <p className={`mt-1 text-sm ${"text-stone-400"}`}>In three notes</p>
         </div>
         <div className="relative flex flex-col gap-4 sm:min-h-[360px] sm:flex sm:items-center sm:justify-center">
@@ -470,7 +470,7 @@ export default function Home() {
       {/* Work Experience – role selector + detail panel */}
       <section id="experience" className="snap-section min-h-screen relative w-full max-w-5xl mb-12 z-10 flex flex-col justify-center py-16" data-aos="fade-up">
         <div className="mb-6">
-          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100">Work Experience</h2>
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-100">Work Experience</h2>
           <p className="mt-1 text-sm text-stone-400">{isMobile ? "Tap a role to expand" : "Select a role to view details"}</p>
         </div>
         {isMobile ? (
@@ -594,7 +594,7 @@ export default function Home() {
       {/* Education – vertical timeline */}
       <section id="education" className="snap-section min-h-screen relative w-full max-w-5xl mb-12 z-10 flex flex-col justify-center py-16" data-aos="fade-up">
         <div className="mb-8">
-          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100">Education</h2>
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-100">Education</h2>
           <p className={`mt-1 text-sm ${"text-stone-400"}`}>Academic journey</p>
         </div>
         <div className="relative pl-8 sm:pl-10 border-l-2 border-accent/40 space-y-10">
@@ -626,7 +626,7 @@ export default function Home() {
       {/* Ambassador Roles – branded split panels */}
       <section id="ambassador" className="snap-section min-h-screen relative w-full max-w-5xl mb-12 z-10 flex flex-col justify-center py-16" data-aos="fade-up">
         <div className="mb-6">
-          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100">Ambassador Roles</h2>
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-100">Ambassador Roles</h2>
           <p className={`mt-1 text-sm ${"text-stone-400"}`}>Community & brand representation</p>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 mt-6 overflow-hidden rounded-2xl border shadow-xl border-stone-200 dark:border-stone-600">
@@ -680,7 +680,7 @@ export default function Home() {
       {/* Project Experience – type badges + bento-style layout */}
       <section id="projects" className="snap-section min-h-screen relative w-full max-w-5xl mb-12 z-10 flex flex-col justify-center py-16" data-aos="fade-up">
         <div className="mb-6">
-          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100">Project Experience</h2>
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-100">Project Experience</h2>
           <p className={`mt-1 text-sm ${"text-stone-400"}`}>Selected builds</p>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mt-6">
@@ -740,7 +740,7 @@ export default function Home() {
       {/* Technical Skills */}
       <section id="skills" className="snap-section min-h-screen relative w-full max-w-5xl mb-12 z-10 flex flex-col justify-center py-16">
         <div className="mb-6">
-          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100">Technical Skills</h2>
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-100">Technical Skills</h2>
         </div>
         <div className="rounded-2xl p-6 sm:p-8 border shadow-lg bg-stone-800/80 border-stone-600">
           {/* Skill Categories as Tabs */}
@@ -776,7 +776,7 @@ export default function Home() {
       {/* Certifications – grid */}
       <section id="certifications" className="snap-section min-h-screen relative w-full max-w-5xl mb-12 z-10 flex flex-col justify-center py-16" data-aos="fade-up">
         <div className="mb-6">
-          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100">Certifications</h2>
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-100">Certifications</h2>
           <p className={`mt-1 text-sm ${"text-stone-400"}`}>Credentials & courses</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -814,7 +814,7 @@ export default function Home() {
       {/* Extra-Curricular Activities & Achievements */}
       <section id="achievements" className="snap-section min-h-screen relative w-full max-w-5xl mb-12 z-10 flex flex-col justify-center py-16" data-aos="fade-up">
         <div className="mb-6">
-          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100">Achievements &amp; Extra-Curricular</h2>
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-100">Achievements &amp; Extra-Curricular</h2>
         </div>
         <div className="grid grid-cols-1 gap-4 mt-6" data-aos="fade-up" data-aos-delay="200">
           <div className={`rounded-2xl p-5 border shadow-md flex flex-col transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5
@@ -850,7 +850,7 @@ export default function Home() {
       {/* Entrepreneurship */}
       <section id="entrepreneurship" className="snap-section min-h-screen relative w-full max-w-5xl mb-12 z-10 flex flex-col justify-center py-16" data-aos="fade-up">
         <div className="mb-6">
-          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100">Entrepreneurship</h2>
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-100">Entrepreneurship</h2>
         </div>
         <div className={`rounded-2xl p-6 sm:p-8 border shadow-lg transition-all duration-300
           bg-stone-800/80 border-stone-600`} data-aos="zoom-in" data-aos-delay="200">
@@ -915,7 +915,7 @@ export default function Home() {
       {/* Event Management */}
       <section id="events" className="snap-section min-h-screen relative w-full max-w-5xl mb-12 z-10 flex flex-col justify-center py-16" data-aos="fade-up">
         <div className="mb-6">
-          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100">Event Management</h2>
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-100">Event Management</h2>
         </div>
         <div className={`rounded-2xl p-6 sm:p-8 border shadow-lg transition-all duration-300
           bg-stone-800/80 border-stone-600`} data-aos="zoom-in" data-aos-delay="200">
@@ -979,7 +979,7 @@ export default function Home() {
       {/* Download Resume */}
       <section id="resume" className="snap-section min-h-screen relative w-full max-w-5xl mb-12 z-10 flex flex-col justify-center py-16" data-aos="fade-up">
         <div className="mb-6">
-          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100">Resume</h2>
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-100">Resume</h2>
         </div>
         <div className={`rounded-2xl p-8 border shadow-lg text-center transition-all duration-300
           bg-stone-800/80 border-stone-600`}>
