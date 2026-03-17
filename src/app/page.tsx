@@ -421,7 +421,7 @@ export default function Home() {
               <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight">
                 <span className="gradient-text">Shambhavi</span>
                 <br />
-                <span className="text-stone-100">Navranjan Kumar</span>
+                <span className="text-stone-100">Navranjan Kumar, CSPO</span>
               </h1>
               <p className="mt-3 text-lg sm:text-xl font-medium text-stone-400">
                 Product & Engineering Management
