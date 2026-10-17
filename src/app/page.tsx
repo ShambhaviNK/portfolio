@@ -98,12 +98,13 @@ const EXPERIENCE_JOBS = [
 
 export default function Home() {
   useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     AOS.init({ 
       once: true, 
-      duration: 600, 
+      duration: reduceMotion ? 0 : 600, 
       offset: 50,
       easing: 'ease-out-cubic',
-      disable: 'mobile'
+      disable: reduceMotion ? true : 'mobile'
     });
   }, []);
 
@@ -215,13 +216,13 @@ export default function Home() {
       `}</style>
       <div className="relative min-h-screen font-sans bg-gradient-to-b from-stone-950 via-stone-900 to-stone-950 text-stone-100">
         {/* Scroll progress bar – top */}
-        <div className="fixed top-0 left-0 right-0 h-1 bg-stone-200/50 dark:bg-stone-700/50 z-[60]">
+        <div className="fixed top-0 left-0 right-0 h-1 bg-stone-800 z-[60]">
           <div className="h-full bg-accent transition-all duration-300 ease-out" style={{ width: `${scrollProgress * 100}%` }} />
         </div>
 
         {/* Next / Prev section buttons + section indicator */}
         <div className="fixed right-4 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col items-center gap-3">
-          <span className="text-xs font-medium text-stone-500">
+          <span className="text-xs font-medium text-stone-400">
             {currentSectionIndex + 1} / {CARD_IDS.length}
           </span>
           <button onClick={goToPrevSection} aria-label="Previous section" className="p-2 rounded-full border-2 border-stone-600 hover:border-accent transition-all hover:scale-110">
@@ -239,10 +240,10 @@ export default function Home() {
               key={s.id}
               onClick={() => scrollToSection(s.id)}
               className={`flex items-center gap-2 text-left transition-all duration-300 group py-1
-                ${activeSection === s.id ? 'opacity-100' : 'opacity-40 hover:opacity-70'}`}
+                ${activeSection === s.id ? 'opacity-100' : 'opacity-80 hover:opacity-100'}`}
             >
-              <span className={`w-1.5 h-1.5 rounded-full shrink-0 transition-all duration-300 ${activeSection === s.id ? 'bg-accent w-2 h-2' : 'bg-stone-500'}`} />
-              <span className="text-[11px] font-medium uppercase tracking-wider max-w-0 group-hover:max-w-[88px] overflow-hidden transition-all duration-300 text-stone-400">{s.label}</span>
+              <span className={`w-1.5 h-1.5 rounded-full shrink-0 transition-all duration-300 ${activeSection === s.id ? 'bg-accent w-2 h-2' : 'bg-stone-300'}`} />
+              <span className="text-[11px] font-medium uppercase tracking-wider max-w-0 group-hover:max-w-[88px] overflow-hidden transition-all duration-300 text-stone-300">{s.label}</span>
             </button>
           ))}
         </nav>
@@ -250,7 +251,7 @@ export default function Home() {
         {/* Floating Contact Button – on every slide except the first */}
         {currentSectionIndex !== 0 && (
           <button
-            className="fixed bottom-8 right-8 z-50 bg-accent text-white rounded-full shadow-lg p-4 transition-all duration-300 flex items-center gap-2 hover:scale-105 hover:shadow-xl hover:bg-accent-light font-medium text-sm"
+            className="fixed bottom-8 right-8 z-50 bg-tide text-stone-50 rounded-full shadow-lg p-4 transition-all duration-300 flex items-center gap-2 hover:scale-105 hover:shadow-xl hover:bg-tide-deep font-medium text-sm"
             onClick={() => setShowContact(true)}
             aria-label="Contact Me"
           >
@@ -344,7 +345,7 @@ export default function Home() {
       {/* Navigation Menu Button */}
       <button
         onClick={() => setShowNavMenu(!showNavMenu)}
-        className="fixed top-8 left-8 z-50 bg-accent text-white rounded-full shadow-lg p-3 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-accent-light"
+        className="fixed top-8 left-8 z-50 bg-tide text-stone-50 rounded-full shadow-lg p-3 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-tide-deep"
         aria-label="Navigation menu"
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -395,7 +396,7 @@ export default function Home() {
       {showScrollTop && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-8 left-8 z-50 bg-accent text-white rounded-full shadow-lg p-3 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-accent-light"
+          className="fixed bottom-8 left-8 z-50 bg-tide text-stone-50 rounded-full shadow-lg p-3 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-tide-deep"
           aria-label="Scroll to top"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -412,12 +413,12 @@ export default function Home() {
               <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl overflow-hidden shadow-2xl ring-2 ring-accent/30 hover:ring-accent/60 transition-all duration-300 hover:scale-[1.02]">
                 <Image src="/profile.jpg" alt="Shambhavi Navranjan Kumar" width={144} height={144} className="w-full h-full object-cover" />
               </div>
-              <div className="absolute -bottom-2 -right-2 w-10 h-10 rounded-xl bg-accent flex items-center justify-center shadow-lg">
+              <div className="absolute -bottom-2 -right-2 w-10 h-10 rounded-xl bg-tide flex items-center justify-center shadow-lg">
                 <Image src="/logo.svg" alt="" width={24} height={24} />
               </div>
             </div>
             <div className="text-center">
-              <p className="font-mono text-xs uppercase tracking-[0.3em] text-stone-500 mb-2">Portfolio</p>
+              <p className="font-mono text-xs uppercase tracking-[0.3em] text-stone-400 mb-2">Portfolio</p>
               <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight">
                 <span className="gradient-text">Shambhavi</span>
                 <br />
@@ -426,13 +427,13 @@ export default function Home() {
               <p className="mt-3 text-lg sm:text-xl font-medium text-stone-400">
                 Product & Engineering Management
               </p>
-              <p className="mt-1 text-sm text-stone-500">San Jose, CA · MS @ SJSU</p>
+              <p className="mt-1 text-sm text-stone-400">San Jose, CA · MS @ SJSU</p>
             </div>
           </div>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
               onClick={() => setShowContact(true)}
-              className="cta-glow w-full sm:w-auto px-8 py-4 rounded-2xl bg-accent text-white font-semibold text-base hover:bg-accent-light transition-all duration-300 hover:scale-[1.02] hover:shadow-xl shadow-lg"
+              className="cta-glow w-full sm:w-auto px-8 py-4 rounded-2xl bg-tide text-stone-50 font-semibold text-base hover:bg-tide-deep transition-all duration-300 hover:scale-[1.02] hover:shadow-xl shadow-lg"
             >
               Get in touch
             </button>
@@ -466,8 +467,8 @@ export default function Home() {
               sm:rotate-[-3deg] sm:origin-bottom-left sm:left-4 sm:top-4 mb-4 sm:mb-0`}
           >
             <span className="text-2xl opacity-70">📐</span>
-            <p className="font-display font-bold text-stone-800 dark:text-stone-200 mt-2 text-lg">Built</p>
-            <p className="text-sm text-stone-600 dark:text-stone-400 mt-1">4+ years in software engineering & product delivery.</p>
+            <p className="font-display font-bold text-stone-100 mt-2 text-lg">Built</p>
+            <p className="text-sm text-stone-300 mt-1">4+ years in software engineering & product delivery.</p>
           </div>
           {/* Middle card – right; stacked on mobile, tilted on desktop */}
           <div
@@ -476,8 +477,8 @@ export default function Home() {
               sm:rotate-[2deg] sm:origin-bottom-right sm:right-4 sm:top-8 mb-4 sm:mb-0`}
           >
             <span className="text-2xl opacity-70">🎓</span>
-            <p className="font-display font-bold text-stone-800 dark:text-stone-200 mt-2 text-lg">Learning</p>
-            <p className="text-sm text-stone-600 dark:text-stone-400 mt-1">Masters in Engineering Management — strategy, tech & leadership.</p>
+            <p className="font-display font-bold text-stone-100 mt-2 text-lg">Learning</p>
+            <p className="text-sm text-stone-300 mt-1">Masters in Engineering Management — strategy, tech & leadership.</p>
           </div>
           {/* Front card – center, main story */}
           <div
@@ -485,8 +486,8 @@ export default function Home() {
               ${"bg-stone-800/95 border-stone-600"}
               rotate-0 mt-0 sm:mt-28`}
           >
-            <p className="text-base sm:text-lg leading-relaxed text-stone-700 dark:text-stone-300">
-              Aspiring <span className="font-semibold text-stone-900 dark:text-stone-100">Product/Project Manager</span> bridging technical depth with business strategy. Building toward scalable, impactful solutions.
+            <p className="text-base sm:text-lg leading-relaxed text-stone-300">
+              Aspiring <span className="font-semibold text-stone-100">Product/Project Manager</span> bridging technical depth with business strategy. Building toward scalable, impactful solutions.
             </p>
           </div>
         </div>
@@ -522,7 +523,7 @@ export default function Home() {
                       <div className="font-semibold text-base text-stone-100 leading-snug">{shortTitle}</div>
                       <div className="mt-1 text-xs text-stone-400 flex flex-wrap gap-x-3 gap-y-1">
                         <span className="text-accent font-medium">{job.company}</span>
-                        <span className="italic text-stone-500">{job.dates}</span>
+                        <span className="italic text-stone-400">{job.dates}</span>
                       </div>
                     </div>
                     <svg
@@ -550,7 +551,7 @@ export default function Home() {
                             href={job.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 bg-accent text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-accent-light transition-all duration-300"
+                            className="inline-flex items-center gap-2 bg-tide text-stone-50 px-4 py-2 rounded-xl text-sm font-medium hover:bg-tide-deep transition-all duration-300"
                           >
                             <span>🔗</span> View Project
                           </a>
@@ -594,7 +595,7 @@ export default function Home() {
                     <div className="font-bold text-lg sm:text-xl text-stone-100">{job.title}</div>
                     <div className="text-sm flex flex-wrap gap-x-4 gap-y-1 mt-2 text-stone-400">
                       <span>{job.company}</span>
-                      <span className="italic text-stone-500">{job.dates}</span>
+                      <span className="italic text-stone-400">{job.dates}</span>
                     </div>
                     <ul className="list-disc pl-5 space-y-2 mt-4 text-sm text-stone-300">
                       {job.points.map((p, i) => (
@@ -603,7 +604,7 @@ export default function Home() {
                     </ul>
                     {job.link && (
                       <div className="mt-6">
-                        <a href={job.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-accent text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-accent-light transition-all duration-300">
+                        <a href={job.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-tide text-stone-50 px-4 py-2 rounded-xl text-sm font-medium hover:bg-tide-deep transition-all duration-300">
                           <span>🔗</span> View Project
                         </a>
                       </div>
@@ -633,15 +634,15 @@ export default function Home() {
             { degree: "Bachelor of Engineering, Information Technology", school: "Shri Ramdeobaba College of Engineering and Management", location: "Nagpur, Maharashtra, India", dates: "Aug 2016 – May 2020", highlight: "Graduated with distinction in Information Technology." }
           ].map((edu, index) => (
             <div key={index} className="relative">
-              <span className="absolute -left-8 sm:-left-10 top-0 w-4 h-4 rounded-full bg-accent border-4 border-stone-100 dark:border-stone-900 shadow-sm" aria-hidden />
+              <span className="absolute -left-8 sm:-left-10 top-0 w-4 h-4 rounded-full bg-accent border-4 border-stone-950 shadow-sm" aria-hidden />
               <div className={`rounded-xl p-5 sm:p-6 ${"bg-stone-800/60 border border-stone-600/60"}`}>
                 <span className={`inline-block text-xs font-semibold uppercase tracking-wider px-2.5 py-1 rounded-md mb-3 ${"bg-accent/20 text-teal-200"}`}>
                   {edu.dates}
                 </span>
-                <h3 className="font-bold text-lg text-stone-900 dark:text-stone-100">{edu.degree}</h3>
+                <h3 className="font-bold text-lg text-stone-100">{edu.degree}</h3>
                 <p className="text-sm font-medium text-accent mt-1">{edu.school}</p>
-                <p className="text-sm text-stone-600 dark:text-stone-400 mt-0.5">{edu.location}</p>
-                <p className="text-sm text-stone-700 dark:text-stone-300 mt-3 leading-relaxed">{edu.highlight}</p>
+                <p className="text-sm text-stone-300 mt-0.5">{edu.location}</p>
+                <p className="text-sm text-stone-300 mt-3 leading-relaxed">{edu.highlight}</p>
               </div>
             </div>
           ))}
@@ -658,7 +659,7 @@ export default function Home() {
           <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-100">Ambassador Roles</h2>
           <p className={`mt-1 text-sm ${"text-stone-400"}`}>Community & brand representation</p>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 mt-6 overflow-hidden rounded-2xl border shadow-xl border-stone-200 dark:border-stone-600">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 mt-6 overflow-hidden rounded-2xl border shadow-xl border-stone-600">
           {/* Adobe – left panel with brand tint */}
           <div className={`relative p-6 sm:p-8 flex flex-col ${"bg-gradient-to-br from-red-950/30 to-stone-800/90 border-r-0 lg:border-r border-stone-600"}`}>
             <div className="flex items-start gap-4 mb-4">
@@ -666,14 +667,14 @@ export default function Home() {
                 <Image src="/adobe-logo.png" alt="Adobe" width={44} height={44} />
               </div>
               <div>
-                <h3 className="font-display font-bold text-lg text-stone-900 dark:text-stone-100">Adobe Student Ambassador</h3>
-                <p className="text-sm text-stone-600 dark:text-stone-400 mt-0.5">Creative tools & technologies for the student community</p>
+                <h3 className="font-display font-bold text-lg text-stone-100">Adobe Student Ambassador</h3>
+                <p className="text-sm text-stone-300 mt-0.5">Creative tools & technologies for the student community</p>
               </div>
             </div>
-            <ul className="space-y-2 text-sm text-stone-700 dark:text-stone-300">
+            <ul className="space-y-2 text-sm text-stone-300">
               {["Promoting Adobe creative software solutions", "Organizing workshops and training sessions", "Supporting students with design tools", "Building creative skills and digital literacy"].map((item, i) => (
                 <li key={i} className="flex gap-2">
-                  <span className="text-red-500 dark:text-red-400 mt-0.5">▸</span>
+                  <span className="text-red-300 mt-0.5">▸</span>
                   <span>{item}</span>
                 </li>
               ))}
@@ -686,11 +687,11 @@ export default function Home() {
                 <Image src="/fetch-ai-logo.svg" alt="Fetch AI" width={44} height={44} />
               </div>
               <div>
-                <h3 className="font-display font-bold text-lg text-stone-900 dark:text-stone-100">Fetch AI Innovation Ambassador</h3>
-                <p className="text-sm text-stone-600 dark:text-stone-400 mt-0.5">AI innovation & adoption in the academic community</p>
+                <h3 className="font-display font-bold text-lg text-stone-100">Fetch AI Innovation Ambassador</h3>
+                <p className="text-sm text-stone-300 mt-0.5">AI innovation & adoption in the academic community</p>
               </div>
             </div>
-            <ul className="space-y-2 text-sm text-stone-700 dark:text-stone-300">
+            <ul className="space-y-2 text-sm text-stone-300">
               {["Advocating for AI innovation and adoption", "Facilitating AI workshops and demonstrations", "Connecting students with cutting-edge AI technologies", "Promoting responsible AI development and usage"].map((item, i) => (
                 <li key={i} className="flex gap-2">
                   <span className="text-accent mt-0.5">▸</span>
@@ -747,9 +748,9 @@ export default function Home() {
               <span className={`inline-block w-fit text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-lg border mb-4 ${project.typeStyle}`}>
                 {project.type}
               </span>
-              <h3 className="font-display font-bold text-lg text-stone-900 dark:text-stone-100">{project.title}</h3>
+              <h3 className="font-display font-bold text-lg text-stone-100">{project.title}</h3>
               <p className="text-sm text-accent font-medium mt-0.5">{project.org}</p>
-              <ul className="mt-4 space-y-2 text-sm text-stone-700 dark:text-stone-300">
+              <ul className="mt-4 space-y-2 text-sm text-stone-300">
                 {project.points.map((point, pointIndex) => (
                   <li key={pointIndex} className="flex gap-2 leading-relaxed">
                     <span className="text-accent flex-shrink-0 mt-0.5">•</span>
@@ -779,7 +780,7 @@ export default function Home() {
                 key={tab}
                 className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300
                   ${activeTab === tab
-                    ? 'bg-accent text-white shadow-md'
+                    ? 'bg-tide text-stone-50 shadow-md'
                     : 'bg-stone-700 text-stone-300 hover:bg-stone-600'}`}
                 onClick={() => setActiveTab(tab)}
               >
@@ -827,10 +828,10 @@ export default function Home() {
               data-aos="fade-up"
               data-aos-delay={i * 50}
             >
-              <p className="font-display font-bold text-base text-stone-900 dark:text-stone-100 leading-snug">{cert.title}</p>
+              <p className="font-display font-bold text-base text-stone-100 leading-snug">{cert.title}</p>
               <p className="text-sm text-accent font-medium mt-1">{cert.org}</p>
-              <p className="text-xs mt-2 text-stone-500">{cert.date}</p>
-              {cert.id && <p className="text-xs text-stone-400 dark:text-stone-500 mt-1">ID: {cert.id}</p>}
+              <p className="text-xs mt-2 text-stone-400">{cert.date}</p>
+              {cert.id && <p className="text-xs text-stone-400 mt-1">ID: {cert.id}</p>}
             </div>
           ))}
         </div>
@@ -848,8 +849,8 @@ export default function Home() {
         <div className="grid grid-cols-1 gap-4 mt-6" data-aos="fade-up" data-aos-delay="200">
           <div className={`rounded-2xl p-5 border shadow-md flex flex-col transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5
             bg-stone-800/80 border-stone-600`} data-aos="slide-in-left" data-aos-delay="100">
-            <div className="font-bold text-lg text-stone-900 dark:text-stone-100 mb-3">🏅 Achievements</div>
-            <ul className="list-disc pl-4 text-sm text-stone-700 dark:text-stone-300 space-y-1">
+            <div className="font-bold text-lg text-stone-100 mb-3">🏅 Achievements</div>
+            <ul className="list-disc pl-4 text-sm text-stone-300 space-y-1">
               <li>Secured first division in Kathak</li>
               <li>Visharadh in Kathak</li>
               <li>Performed in World Bengali Dance Conference</li>
@@ -857,8 +858,8 @@ export default function Home() {
           </div>
           <div className={`rounded-2xl p-5 border shadow-md flex flex-col transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5
             bg-stone-800/80 border-stone-600`} data-aos="slide-in-right" data-aos-delay="200">
-            <div className="font-bold text-lg text-stone-900 dark:text-stone-100 mb-3">🎭 Extra-Curricular Activities</div>
-            <ul className="list-disc pl-4 text-sm text-stone-700 dark:text-stone-300 space-y-1">
+            <div className="font-bold text-lg text-stone-100 mb-3">🎭 Extra-Curricular Activities</div>
+            <ul className="list-disc pl-4 text-sm text-stone-300 space-y-1">
               <li>Part of Hindu-Yuva Club, SJSU</li>
               <li>Member of organizing committee of various college events, RCOEM</li>
               <li>Member of Students&apos; Representative Council, 2018-19, RCOEM</li>
@@ -884,9 +885,9 @@ export default function Home() {
         <div className={`rounded-2xl p-6 sm:p-8 border shadow-lg transition-all duration-300
           bg-stone-800/80 border-stone-600`} data-aos="zoom-in" data-aos-delay="200">
           <div className="text-center">
-            <div className="font-bold text-xl text-stone-900 dark:text-stone-100 mb-4">💎 Coffer Chics</div>
-            <p className="text-base text-stone-700 dark:text-stone-300 mb-4">Founded and operated a successful Instagram-based jewellery business in India, specializing in handmade custom jewellery, demonstrating entrepreneurial spirit and digital marketing skills.</p>
-            <p className="text-base mb-4 text-stone-700 dark:text-stone-300">Instagram: <a href="https://www.instagram.com/coffer_chics" target="_blank" rel="noopener noreferrer" className="text-accent underline hover:no-underline hover:text-accent-light transition-colors">@coffer_chics</a></p>
+            <div className="font-bold text-xl text-stone-100 mb-4">💎 Coffer Chics</div>
+            <p className="text-base text-stone-300 mb-4">Founded and operated a successful Instagram-based jewellery business in India, specializing in handmade custom jewellery, demonstrating entrepreneurial spirit and digital marketing skills.</p>
+            <p className="text-base mb-4 text-stone-300">Instagram: <a href="https://www.instagram.com/coffer_chics" target="_blank" rel="noopener noreferrer" className="text-accent underline hover:no-underline hover:text-accent-light transition-colors">@coffer_chics</a></p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
               {[
                 { icon: "🚀", title: "Growth", desc: "Rapidly growing Instagram presence with engaged customer base" },
@@ -949,8 +950,8 @@ export default function Home() {
         <div className={`rounded-2xl p-6 sm:p-8 border shadow-lg transition-all duration-300
           bg-stone-800/80 border-stone-600`} data-aos="zoom-in" data-aos-delay="200">
           <div className="text-center mb-6">
-            <div className="font-bold text-xl text-stone-900 dark:text-stone-100 mb-4">🎭 Blindfolded Conversations</div>
-            <p className="text-base text-stone-700 dark:text-stone-300 mb-4">Successfully organized and managed a two-day collaborative event with Lush House cafe in Nagpur, demonstrating comprehensive event management skills.</p>
+            <div className="font-bold text-xl text-stone-100 mb-4">🎭 Blindfolded Conversations</div>
+            <p className="text-base text-stone-300 mb-4">Successfully organized and managed a two-day collaborative event with Lush House cafe in Nagpur, demonstrating comprehensive event management skills.</p>
           </div>
           
           <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4`}>
@@ -974,7 +975,7 @@ export default function Home() {
           </div>
           
           <div className="mt-8">
-            <div className="font-semibold text-lg mb-4 text-center text-stone-900 dark:text-stone-100">📸 Event Highlights</div>
+            <div className="font-semibold text-lg mb-4 text-center text-stone-100">📸 Event Highlights</div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {/* Event Images */}
               <div className="aspect-square rounded-lg shadow-md hover:scale-105 transition-transform duration-300 overflow-hidden">
@@ -1012,11 +1013,11 @@ export default function Home() {
         </div>
         <div className={`rounded-2xl p-8 border shadow-lg text-center transition-all duration-300
           bg-stone-800/80 border-stone-600`}>
-          <p className="text-base text-stone-700 dark:text-stone-300 mb-6">Download my detailed resume to learn more about my experience, skills, and achievements.</p>
+          <p className="text-base text-stone-300 mb-6">Download my detailed resume to learn more about my experience, skills, and achievements.</p>
           <a 
             href="/resume.pdf" 
             download="Shambhavi_Kumar_Resume.pdf"
-            className="inline-flex items-center gap-3 bg-accent text-white px-8 py-4 rounded-xl font-semibold hover:bg-accent-light transition-all duration-300 shadow-lg hover:shadow-xl"
+            className="inline-flex items-center gap-3 bg-tide text-stone-50 px-8 py-4 rounded-xl font-semibold hover:bg-tide-deep transition-all duration-300 shadow-lg hover:shadow-xl"
           >
             <span className="text-xl">📥</span>
             Download Resume (PDF)
@@ -1036,11 +1037,11 @@ export default function Home() {
 // SkillCard component – modern teal/stone palette
 function SkillCard({ icon, name, category }: { icon: React.ReactNode; name: string; category: string }) {
   const categoryColors: Record<string, string> = {
-    Frontend: "bg-teal-700 hover:bg-teal-600",
+    Frontend: "bg-teal-800 hover:bg-teal-700",
     Backend: "bg-teal-800 hover:bg-teal-700",
     Cloud: "bg-stone-700 hover:bg-stone-600",
     Tools: "bg-amber-800/90 hover:bg-amber-700/90",
-    Languages: "bg-teal-600 hover:bg-teal-500",
+    Languages: "bg-teal-800 hover:bg-teal-700",
     Specializations: "bg-amber-900/90 hover:bg-amber-800/90",
   };
   const bg = categoryColors[category] ?? "bg-stone-600 hover:bg-stone-500";
@@ -1048,7 +1049,7 @@ function SkillCard({ icon, name, category }: { icon: React.ReactNode; name: stri
     <div className={`flex flex-col items-center justify-center rounded-xl shadow-md p-4 min-h-[100px] ${bg} text-white transition-all duration-300 hover:scale-105 hover:shadow-lg group`}>
       <div className="text-2xl mb-2 group-hover:scale-110 transition-transform duration-300">{icon}</div>
       <div className="text-sm font-semibold text-center">{name}</div>
-      <div className="text-xs mt-1 opacity-80">{category}</div>
+      <div className="text-xs mt-1 text-white/90">{category}</div>
     </div>
   );
 }

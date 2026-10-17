@@ -1,21 +1,28 @@
 @import "aos/dist/aos.css";
 @import "tailwindcss";
 
-/* Modern palette: Teal + Amber (unique, professional) */
+/* Dark stone field, tide for fills, a lighter tide for type, clay for warmth.
+   The page is always dark, so these tokens are not swapped with the OS theme. */
 :root {
-  --background: #faf9f7;
-  --foreground: #1c1917;
-  --accent: #0d9488;
-  --accent-light: #14b8a6;
-  --accent-warm: #d97706;
-  --surface: #ffffff;
-  --surface-muted: #f5f5f4;
-  --border: #e7e5e4;
+  --background: #12100e;
+  --foreground: #f3efe8;
+  --accent: #9ee0d6;
+  --accent-light: #d7f7f2;
+  --tide: #0f766e;
+  --tide-deep: #0c5c56;
+  --accent-warm: #f0b27a;
+  --surface: #2a2623;
+  --surface-muted: #1c1917;
+  --border: #57534e;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-tide: var(--tide);
+  --color-tide-deep: var(--tide-deep);
   --font-sans: var(--font-geist-sans), system-ui, sans-serif;
   --font-mono: var(--font-geist-mono);
   --font-display: var(--font-syne), var(--font-geist-sans), system-ui, sans-serif;
@@ -31,10 +38,7 @@ body {
   font-family: var(--font-sans);
 }
 
-.accent {
-  color: var(--accent);
-}
-
+.accent,
 .text-accent {
   color: var(--accent);
 }
@@ -43,16 +47,21 @@ body {
   color: var(--accent-warm);
 }
 
-.bg-accent {
-  background-color: var(--accent);
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
-.bg-accent-light {
-  background-color: var(--accent-light);
-}
-
-.bg-accent-warm {
-  background-color: var(--accent-warm);
+@media (prefers-reduced-motion: reduce) {
+  .cta-glow,
+  .animate-spin-slow,
+  .animate-bounce-slow,
+  .animate-pulse-slow,
+  .animate-float,
+  .animate-glow,
+  .animate-shimmer {
+    animation: none;
+  }
 }
 
 /* Scroll snap container – full-page sections */
@@ -302,7 +311,7 @@ body {
 
 /* Gradient Text */
 .gradient-text {
-  background: linear-gradient(135deg, var(--accent) 0%, #0f766e 50%, var(--accent-warm) 100%);
+  background: linear-gradient(120deg, #b7f0e6 0%, #f3efe8 46%, var(--accent-warm) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -336,10 +345,10 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--accent);
+  background: var(--tide);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-light);
+  background: var(--accent);
 }
